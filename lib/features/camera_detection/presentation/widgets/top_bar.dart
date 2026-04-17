@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../../controllers/camera_controller.dart';
 
 class TopBar extends StatelessWidget {
+  final VoidCallback onBack;
   final CameraControllerX controller;
   final VoidCallback onFlashToggle;
 
   const TopBar({
+    required this.onBack,
     required this.controller,
     required this.onFlashToggle,
   });
@@ -19,6 +21,13 @@ class TopBar extends StatelessWidget {
         child: Stack(
           alignment: AlignmentGeometry.center,
           children: [
+            Positioned(
+              left: 10,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: onBack,
+              ),
+            ),
             Center(
               child: Text(
                 "Camera",

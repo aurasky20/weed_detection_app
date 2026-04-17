@@ -35,6 +35,7 @@ class _CameraPageState extends State<CameraPage> {
                 await controller.toggleFlash();
                 setState(() {}); // 🔥 INI KUNCINYA
               },
+              onBack: () => Navigator.pop(context),
             ),
           ),
 

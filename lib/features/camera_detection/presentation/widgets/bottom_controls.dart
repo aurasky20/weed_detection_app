@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:weedcheck/features/camera_detection/presentation/pages/result_page.dart';
 import '../../controllers/camera_controller.dart';
 import '../pages/preview_page.dart';
 
@@ -30,36 +31,33 @@ class BottomControls extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.image, color: Colors.white, size: 30),
               onPressed: () async {
-                final file =
-                    await picker.pickImage(source: ImageSource.gallery);
+                final file = await picker.pickImage(source: ImageSource.gallery);
 
-                if (file != null) {
-                  Navigator.push(
-                    parentContext,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          PreviewPage(imagePath: file.path),
-                    ),
-                  );
-                }
+if (file != null) {
+  Navigator.push(
+    parentContext,
+    MaterialPageRoute(
+      builder: (_) => ResultPage(imagePath: file.path),
+    ),
+  );
+}
               },
             ),
 
             /// 📸 CAPTURE
             GestureDetector(
               onTap: () async {
-                final file = await controller.takePicture();
+  final file = await controller.takePicture();
 
-                if (file != null) {
-                  Navigator.push(
-                    parentContext,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          PreviewPage(imagePath: file.path),
-                    ),
-                  );
-                }
-              },
+  if (file != null) {
+    Navigator.push(
+      parentContext,
+      MaterialPageRoute(
+        builder: (_) => ResultPage(imagePath: file.path),
+      ),
+    );
+  }
+},
               child: Container(
                 width: 80,
                 height: 80,

@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weedcheck/core/navigation/main_navigation.dart';
 import 'features/camera_detection/presentation/pages/camera_page.dart';
 
-void main() async  {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CameraPage(),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    home: MainNavigation(),
+  ));
 }
