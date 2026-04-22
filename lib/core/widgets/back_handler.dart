@@ -23,10 +23,6 @@ class BackHandler {
 
       lastBackPressTime = now;
 
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text("Tekan sekali lagi untuk keluar")),
-      // );
-
       return false;
     }
 

@@ -1,21 +1,43 @@
+import 'dart:typed_data';
 import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:image/image.dart' as img;
 
 class TFLiteService {
-  late Interpreter interpreter;
+  late Interpreter _interpreter;
 
   Future<void> loadModel() async {
-    // Pastikan file model ada di assets dan terdaftar di pubspec.yaml
-    interpreter = await Interpreter.fromAsset(
-      'assets/models/yolov8n_f16.tflite',
-    );
+    _interpreter = await Interpreter.fromAsset('assets/models/best_float32.tflite');
   }
 
-  List<double> runModel(List input) {
-  // Jika ada 3 jenis gulma + 1 default (total 4), gunakan [1, 4]
-  // Sesuaikan dengan jumlah label di switch case Anda
-  var output = List<double>.filled(4, 0.0).reshape([1, 4]); 
+  /// PREPROCESS IMAGE
+  Float32List preprocess(img.Image image) {
+    final resized = img.copyResize(image, width: 640, height: 640);
 
-  interpreter.run(input, output);
-  return List<double>.from(output[0]);
-}
+    Float32List input = Float32List(1 * 640 * 640 * 3);
+    int index = 0;
+
+    for (int y = 0; y < 640; y++) {
+      for (int x = 0; x < 640; x++) {
+        final pixel = resized.getPixel(x, y);
+
+        input[index++] = pixel.r / 255.0;
+        input[index++] = pixel.g / 255.0;
+        input[index++] = pixel.b / 255.0;
+      }
+    }
+    
+    return input;
+  }
+
+  /// RUN INFERENCE
+  List runModel(Float32List input) {
+    var output = List.generate(
+      1,
+      (i) => List.generate(7, (j) => List.filled(8400, 0.0)),
+    );
+
+    _interpreter.run(input.reshape([1, 640, 640, 3]), output);
+
+    return output;
+  }
 }

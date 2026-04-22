@@ -15,6 +15,7 @@ class BottomControls extends StatelessWidget {
     required this.onFlip,
   });
 
+  
   @override
   Widget build(BuildContext context) {
     final picker = ImagePicker();
@@ -33,31 +34,57 @@ class BottomControls extends StatelessWidget {
               onPressed: () async {
                 final file = await picker.pickImage(source: ImageSource.gallery);
 
-if (file != null) {
-  Navigator.push(
-    parentContext,
-    MaterialPageRoute(
-      builder: (_) => ResultPage(imagePath: file.path),
-    ),
-  );
-}
+                if (file != null) {
+                  try {
+                    String result = await controller.detectImage(file.path);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ResultPage(
+                          result: result,
+                          imagePath: file.path,
+                        ),
+                      ),
+                    );
+                  } catch (e) {
+                    print("ERROR DETEKSI: $e");
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Gagal mendeteksi gambar")),
+                    );
+                  }
+                }
               },
             ),
 
             /// 📸 CAPTURE
             GestureDetector(
               onTap: () async {
-  final file = await controller.takePicture();
+                final file = await controller.takePicture();
 
-  if (file != null) {
-    Navigator.push(
-      parentContext,
-      MaterialPageRoute(
-        builder: (_) => ResultPage(imagePath: file.path),
-      ),
-    );
-  }
-},
+                if (file != null) {
+                  try {
+                    String result = await controller.detectImage(file.path);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ResultPage(
+                          result: result,
+                          imagePath: file.path,
+                        ),
+                      ),
+                    );
+                  } catch (e) {
+                    print("ERROR DETEKSI: $e");
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Gagal mendeteksi gambar")),
+                    );
+                  }
+                }
+              },
               child: Container(
                 width: 80,
                 height: 80,

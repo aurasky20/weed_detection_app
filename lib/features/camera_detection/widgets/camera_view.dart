@@ -14,56 +14,10 @@ class CameraView extends StatefulWidget {
 class _CameraViewState extends State<CameraView> {
   double _zoom = 1.0;
   double _baseZoom = 1.0;
-  List<Map<String, dynamic>> detections = [];
-  bool isProcessing = false;
 
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(Duration(milliseconds: 500), () {
-      startStream();
-    });
-  }
-
-  void startStream() async {
-    final cam = widget.controller.cameraController;
-
-    if (cam == null || !cam.value.isInitialized) {
-      print("Camera belum siap");
-      return;
-    }
-
-    if (cam.value.isStreamingImages) {
-      return;
-    }
-
-    await cam.startImageStream((image) async {
-      if (isProcessing) return;
-
-      isProcessing = true;
-
-      // 🔥 simulasi deteksi (sementara)
-      await Future.delayed(Duration(milliseconds: 100));
-
-      if (!mounted) return;
-
-      setState(() {
-        detections = [
-          {
-            "x": 100.0,
-            "y": 200.0,
-            "w": 150.0,
-            "h": 150.0,
-            "class": 1
-          }
-        ];
-      });
-
-      print("Stream started");
-      print("Frame masuk");
-      isProcessing = false;
-    });
   }
 
   @override
@@ -108,24 +62,6 @@ class _CameraViewState extends State<CameraView> {
       ),
     ),
 
-    /// 🔥 BOUNDING BOX (DI ATAS CAMERA)
-    ...detections.map((det) {
-      return Positioned(
-        left: det["x"],
-        top: det["y"],
-        width: det["w"],
-        height: det["h"],
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: _getColor(det["class"]),
-              width: 3,
-            ),
-          ),
-        ),
-      );
-    }).toList(),
-
         /// 🌞 BRIGHTNESS
         // Positioned(
         //   right: 8,
@@ -156,17 +92,3 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 }
-
-Color _getColor(int classId) {
-  switch (classId) {
-    case 0:
-      return Colors.red;
-    case 1:
-      return Colors.green;
-    case 2:
-      return Colors.blue;
-    default:
-      return Colors.white;
-  }
-}
-
