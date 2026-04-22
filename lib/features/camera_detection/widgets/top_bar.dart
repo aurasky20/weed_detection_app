@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import '../../controllers/camera_controller.dart';
+import '../controllers/camera_controller.dart';
 
 class TopBar extends StatelessWidget {
   final VoidCallback onBack;

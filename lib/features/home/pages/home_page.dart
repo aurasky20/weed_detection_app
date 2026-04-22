@@ -11,13 +11,14 @@ class HomePage extends StatelessWidget {
         children: [
           /// 🔝 HEADER (FIXED)
           HomeHeader(),
-
           /// 📜 CONTENT (SCROLL)
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   HomeCarousel(),
+
+                  SizedBox(height: 20),
 
                   WeedSection(
                     title: "Gulma Daun Lebar",
@@ -30,6 +31,7 @@ class HomePage extends StatelessWidget {
                   WeedSection(
                     title: "Gulma Teki-teki",
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

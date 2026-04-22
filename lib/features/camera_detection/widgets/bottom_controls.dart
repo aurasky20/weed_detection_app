@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:weedcheck/features/camera_detection/presentation/pages/result_page.dart';
-import '../../controllers/camera_controller.dart';
-import '../pages/preview_page.dart';
+import '../pages/result_page.dart';
+import '../controllers/camera_controller.dart';
+// import '../pages/preview_page.dart';
 
 class BottomControls extends StatelessWidget {
   final CameraControllerX controller;

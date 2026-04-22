@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../controllers/camera_controller.dart';
+import '../controllers/camera_controller.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/camera_view.dart';
 import '../widgets/bottom_controls.dart';

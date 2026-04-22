@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import '../../controllers/camera_controller.dart';
+import '../controllers/camera_controller.dart';
 
 class CameraView extends StatefulWidget {
   final CameraControllerX controller;

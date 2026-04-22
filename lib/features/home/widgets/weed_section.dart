@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/gulma_data.dart';
 import 'weed_card.dart';
 
 class WeedSection extends StatelessWidget {
@@ -8,6 +9,8 @@ class WeedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final weeds = GulmaData.data[title] ?? [];
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -27,21 +30,20 @@ class WeedSection extends StatelessWidget {
 
           SizedBox(height: 10),
 
-          /// 🔹 CARD HORIZONTAL
+          /// 🔹 CARD HORIZONTAL (DARI DATA)
           SizedBox(
             height: 140,
-            child: ListView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              children: [
-                WeedCard(
-                  name: "Ageratum Conyzoides",
-                  image: "assets/images/gulma1.jpg",
-                ),
-                WeedCard(
-                  name: "Amaranthus",
-                  image: "assets/images/gulma2.jpg",
-                ),
-              ],
+              itemCount: weeds.length,
+              itemBuilder: (context, index) {
+                final weed = weeds[index];
+
+                return WeedCard(
+                  name: weed.name,
+                  image: weed.image,
+                );
+              },
             ),
           ),
         ],

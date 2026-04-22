@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
-import '../../controllers/tflite_service.dart';
+import '../controllers/tflite_service.dart';
 
 import 'package:image/image.dart' as img; // Pastikan import ini ada di paling atas
 

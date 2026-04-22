@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
-import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/camera_detection/presentation/pages/camera_page.dart';
-import '../../features/history/presentation/pages/history_page.dart';
+import '../../features/home/pages/home_page.dart';
+import '../../features/camera_detection/pages/camera_page.dart';
+import '../../features/history/pages/history_page.dart';
 
 class MainNavigation extends StatelessWidget {
   const MainNavigation({super.key});

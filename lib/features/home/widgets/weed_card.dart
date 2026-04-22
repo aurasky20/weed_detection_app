@@ -16,13 +16,13 @@ class WeedCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         children: [
-          /// 📷 IMAGE
+          /// 📷 IMAGE (NETWORK)
           Container(
             height: 90,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: AssetImage(image),
+                image: NetworkImage(image),
                 fit: BoxFit.cover,
               ),
             ),
