@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../data/gulma_data.dart';
+import '../../../core/data/gulma_data.dart';
 import 'weed_card.dart';
 
+// Halaman ini menampilkan daftar gulma berdasarkan kategori (daun lebar atau daun sempit). Data gulma diambil dari GulmaData dan ditampilkan dalam bentuk kartu horizontal.
 class WeedSection extends StatelessWidget {
   final String title;
 
@@ -37,14 +38,10 @@ class WeedSection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: weeds.length,
               itemBuilder: (context, index) {
-                final weed = weeds[index];
-
                 return WeedCard(
-                  name: weed.name,
-                  image: weed.image,
+                  weed: weeds[index], // 🔥 kirim object
                 );
-              },
-            ),
+              },),
           ),
         ],
       ),

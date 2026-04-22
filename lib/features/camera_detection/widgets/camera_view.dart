@@ -35,7 +35,6 @@ class _CameraViewState extends State<CameraView> {
     }
 
     if (cam.value.isStreamingImages) {
-      print("Sudah streaming");
       return;
     }
 
@@ -135,7 +134,6 @@ class _CameraViewState extends State<CameraView> {
         //   child: Column(
         //     children: [
         //       Icon(Icons.wb_sunny, color: Colors.orange),
-
         //       Expanded(
         //         child: RotatedBox(
         //           quarterTurns: 3,
@@ -150,7 +148,6 @@ class _CameraViewState extends State<CameraView> {
         //           ),
         //         ),
         //       ),
-
         //       Icon(Icons.nightlight_round, color: Colors.orange),
         //     ],
         //   ),
