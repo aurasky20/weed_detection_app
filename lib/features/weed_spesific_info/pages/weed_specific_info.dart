@@ -42,7 +42,7 @@ class WeedSpecificInfo extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.35),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
                     Icons.arrow_back_ios_new_rounded,
@@ -56,10 +56,17 @@ class WeedSpecificInfo extends StatelessWidget {
             /// Collapsing title
             title: Text(
               "Spesifikasi Gulma",
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 12,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
             ),
 
