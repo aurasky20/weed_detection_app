@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:weedcheck/features/camera_detection/data/labels.dart';
 import 'tflite_service.dart';
-
 class CameraControllerX extends ChangeNotifier {
   CameraController? cameraController;
   List<CameraDescription>? cameras;
@@ -21,12 +21,12 @@ class CameraControllerX extends ChangeNotifier {
   double currentExposure = 0.0;
   bool isProcessing = false;
   int lastRun = 0;
+  int _lastProcessedTime = 0;
   late TFLiteService tflite;
 
   Future<void> initCamera() async {
     try {
       cameras = await availableCameras();
-
       if (cameras == null || cameras!.isEmpty) {
         print("No camera found");
         return;
@@ -36,11 +36,16 @@ class CameraControllerX extends ChangeNotifier {
 
       minZoom = await cameraController!.getMinZoomLevel();
       maxZoom = await cameraController!.getMaxZoomLevel();
-
       minExposure = await cameraController!.getMinExposureOffset();
       maxExposure = await cameraController!.getMaxExposureOffset();
+
+      // Start stream AFTER camera is fully set up
+      cameraController!.startImageStream((image) {
+        processFrame(image);
+      });
+
     } catch (e) {
-      print("Camera error: $e");
+      print("Camera init error: $e");
     }
   }
 
@@ -53,10 +58,10 @@ class CameraControllerX extends ChangeNotifier {
   Future<void> _setupCamera(CameraDescription camera) async {
     cameraController = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.medium,  // was .high — this alone cuts lag significantly
       enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.yuv420,
     );
-
     await cameraController!.initialize();
     notifyListeners();
   }
@@ -64,24 +69,28 @@ class CameraControllerX extends ChangeNotifier {
   Future<void> flipCamera() async {
     if (cameras == null || cameras!.isEmpty) return;
 
-    isRearCamera = !isRearCamera;
+    // Stop stream before disposing
+    if (cameraController!.value.isStreamingImages) {
+      await cameraController!.stopImageStream();
+    }
 
-    final newCamera = isRearCamera
-        ? cameras!.first
-        : cameras!.last;
-
-    /// 🔥 WAJIB dispose dulu
     await cameraController?.dispose();
 
-    /// 🔥 BUAT controller baru
+    isRearCamera = !isRearCamera;
+    final newCamera = isRearCamera ? cameras!.first : cameras!.last;
+
     cameraController = CameraController(
       newCamera,
-      ResolutionPreset.high,
+      ResolutionPreset.medium,
       enableAudio: false,
     );
 
-    /// 🔥 INIT ulang
     await cameraController!.initialize();
+
+    // Restart stream on new camera
+    cameraController!.startImageStream((image) {
+      processFrame(image);
+    });
 
     notifyListeners();
   }
@@ -95,8 +104,26 @@ class CameraControllerX extends ChangeNotifier {
   }
 
   Future<XFile?> takePicture() async {
-    if (!cameraController!.value.isInitialized) return null;
-    return await cameraController!.takePicture();
+    if (cameraController == null || !cameraController!.value.isInitialized) return null;
+
+    try {
+      // 1. Matikan stream secara total sebelum capture
+      if (cameraController!.value.isStreamingImages) {
+        await cameraController!.stopImageStream();
+      }
+      
+      // Beri jeda kecil agar hardware kamera siap berpindah mode dari stream ke capture
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      final file = await cameraController!.takePicture();
+      
+      return file;
+    } catch (e) {
+      print("takePicture error: $e");
+      // Opsional: nyalakan lagi HANYA jika gagal capture
+      return null;
+    }
+    
   }
 
   Future<void> setZoom(double value) async {
@@ -105,8 +132,16 @@ class CameraControllerX extends ChangeNotifier {
     notifyListeners();
   }
 
-  void disposeCamera() {
-    cameraController?.dispose();
+  Future<void> disposeCamera() async {
+    if (cameraController != null) {
+      if (cameraController!.value.isStreamingImages) {
+        await cameraController!.stopImageStream();
+      }
+      await cameraController!.dispose();
+      cameraController = null;
+    }
+    isProcessing = false;
+    notifyListeners();
   }
 
   Future<String> detectImage(String path) async {
@@ -122,7 +157,7 @@ class CameraControllerX extends ChangeNotifier {
     final tflite = TFLiteService();
     await tflite.loadModel();
 
-    final input = tflite.preprocess(image!);
+    final input = tflite.preprocess(image);
     final output = tflite.runModel(input);
 
     double bestScore = 0;
@@ -179,6 +214,26 @@ class CameraControllerX extends ChangeNotifier {
     double avgBrightness = totalBrightness / (image.width * image.height);
     print("Kecerahan rata-rata: $avgBrightness"); // Untuk debug
     return avgBrightness < 30; // Jika di bawah 30, dianggap terlalu gelap
+  }
+
+  void processFrame(CameraImage image) async {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    if (isProcessing || (now - _lastProcessedTime) < 1) return;
+
+    isProcessing = true;
+    _lastProcessedTime = now;
+
+    try {
+
+      // Guard: jangan update jika sudah dispose
+      if (cameraController == null) return;
+
+      notifyListeners();
+    } catch (e) {
+      print("processFrame error: $e");
+    } finally {
+      isProcessing = false;
+    }
   }
 
 }

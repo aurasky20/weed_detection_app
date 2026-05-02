@@ -20,7 +20,6 @@ class BottomControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final picker = ImagePicker();
 
-
     return Container(
       color: Colors.black,
       child: SafeArea(
@@ -61,27 +60,48 @@ class BottomControls extends StatelessWidget {
             /// 📸 CAPTURE
             GestureDetector(
               onTap: () async {
+                // Tampilkan loading
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) => const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                );
+
                 final file = await controller.takePicture();
+
+                // Tutup loading
+                if (context.mounted) Navigator.of(context).pop();
 
                 if (file != null) {
                   try {
                     String result = await controller.detectImage(file.path);
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ResultPage(
-                          result: result,
-                          imagePath: file.path,
+                    if (context.mounted) {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ResultPage(
+                            result: result,
+                            imagePath: file.path,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   } catch (e) {
                     print("ERROR DETEKSI: $e");
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Gagal mendeteksi gambar")),
+                      );
+                    }
+                  }
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Gagal mendeteksi gambar")),
-                    );
+                  if (controller.cameraController != null) {
+                    controller.cameraController!.startImageStream((image) {
+                      controller.processFrame(image);
+                    });
                   }
                 }
               },

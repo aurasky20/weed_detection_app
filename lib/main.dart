@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:weedcheck/core/navigation/main_navigation.dart';
-import 'features/camera_detection/pages/camera_page.dart';
+import 'package:weedcheck/features/splash_screen.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: MainNavigation(),
-  ));
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'WeedCheck',
+      home: const SplashScreen(), // Mulai dari sini
+    );
+  }
 }

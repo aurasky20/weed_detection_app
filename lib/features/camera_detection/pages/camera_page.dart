@@ -10,14 +10,23 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  final controller = CameraControllerX();
+  late CameraControllerX _controller;
 
   @override
   void initState() {
     super.initState();
-    controller.initCamera().then((_) {
-      setState(() {});
+    _controller = CameraControllerX();
+    _controller.initCamera();
+  }
+
+  @override
+  void dispose() {
+    // Stop stream first, then dispose
+    _controller.cameraController?.stopImageStream();
+    _controller.disposeCamera().then((_) {
+      print("Hardware kamera berhasil dimatikan");
     });
+    super.dispose();
   }
 
   @override
@@ -30,9 +39,9 @@ class _CameraPageState extends State<CameraPage> {
           Expanded(
             flex: 1,
             child: TopBar(
-              controller: controller,
+              controller: _controller,
               onFlashToggle: () async {
-                await controller.toggleFlash();
+                await _controller.toggleFlash();
                 setState(() {}); 
               },
               onBack: () => Navigator.pop(context),
@@ -42,17 +51,17 @@ class _CameraPageState extends State<CameraPage> {
           /// 📸 3/6
           Expanded(
             flex: 5,
-            child: CameraView(controller: controller),
+            child: CameraView(controller: _controller),
           ),
 
           /// 🎮 2/6
           Expanded(
             flex: 2,
             child: BottomControls(
-              controller: controller,
+              controller: _controller,
               parentContext: context,
               onFlip: () async {
-                await controller.flipCamera();
+                await _controller.flipCamera();
                 setState(() {}); 
               },
             ),
