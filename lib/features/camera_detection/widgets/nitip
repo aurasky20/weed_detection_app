@@ -1,0 +1,26 @@
+/// 🌞 BRIGHTNESS
+        // Positioned(
+        //   right: 8,
+        //   top: 60,
+        //   bottom: 60,
+        //   child: Column(
+        //     children: [
+        //       Icon(Icons.wb_sunny, color: Colors.orange),
+        //       Expanded(
+        //         child: RotatedBox(
+        //           quarterTurns: 3,
+        //           child: Slider(
+        //             value: widget.controller.currentExposure,
+        //             min: widget.controller.minExposure,
+        //             max: widget.controller.maxExposure,
+        //             onChanged: (value) async {
+        //               await widget.controller.setExposure(value);
+        //               setState(() {});
+        //             },
+        //           ),
+        //         ),
+        //       ),
+        //       Icon(Icons.nightlight_round, color: Colors.orange),
+        //     ],
+        //   ),
+        // ),

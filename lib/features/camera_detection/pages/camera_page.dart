@@ -33,7 +33,7 @@ class _CameraPageState extends State<CameraPage> {
               controller: controller,
               onFlashToggle: () async {
                 await controller.toggleFlash();
-                setState(() {}); // 🔥 INI KUNCINYA
+                setState(() {}); 
               },
               onBack: () => Navigator.pop(context),
             ),
@@ -53,7 +53,7 @@ class _CameraPageState extends State<CameraPage> {
               parentContext: context,
               onFlip: () async {
                 await controller.flipCamera();
-                setState(() {}); // 🔥 PENTING
+                setState(() {}); 
               },
             ),
           ),

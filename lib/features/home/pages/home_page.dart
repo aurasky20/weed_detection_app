@@ -4,35 +4,35 @@ import '../widgets/home_carousel.dart';
 import '../widgets/weed_section.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Column(
         children: [
           /// 🔝 HEADER (FIXED)
-          HomeHeader(),
-          /// 📜 CONTENT (SCROLL)
+          const HomeHeader(),
+
+          /// 📜 CONTENT (SCROLLABLE)
           Expanded(
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  HomeCarousel(),
+                  /// Hero Carousel
+                  const HomeCarousel(),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 28),
 
-                  WeedSection(
-                    title: "Gulma Daun Lebar",
-                  ),
+                  /// Weed Sections
+                  const WeedSection(title: "Gulma Daun Lebar"),
+                  const WeedSection(title: "Gulma Daun Sempit"),
+                  const WeedSection(title: "Gulma Teki-tekian"),
 
-                  WeedSection(
-                    title: "Gulma Daun Sempit",
-                  ),
-
-                  WeedSection(
-                    title: "Gulma Teki-teki",
-                  ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),

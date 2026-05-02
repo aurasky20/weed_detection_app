@@ -9,6 +9,7 @@ import 'tflite_service.dart';
 class CameraControllerX extends ChangeNotifier {
   CameraController? cameraController;
   List<CameraDescription>? cameras;
+  List<Map<String, dynamic>> detections = [];
 
   bool isRearCamera = true;
   double zoomLevel = 1.0;
@@ -18,6 +19,9 @@ class CameraControllerX extends ChangeNotifier {
   double minExposure = 0.0;
   double maxExposure = 0.0;
   double currentExposure = 0.0;
+  bool isProcessing = false;
+  int lastRun = 0;
+  late TFLiteService tflite;
 
   Future<void> initCamera() async {
     try {
@@ -176,4 +180,5 @@ class CameraControllerX extends ChangeNotifier {
     print("Kecerahan rata-rata: $avgBrightness"); // Untuk debug
     return avgBrightness < 30; // Jika di bawah 30, dianggap terlalu gelap
   }
+
 }

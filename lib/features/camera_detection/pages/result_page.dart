@@ -12,18 +12,17 @@ class ResultPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Hasil Deteksi"),
-        backgroundColor: const Color(0xFF41B06E), // Menyesuaikan tema WeedCheck
+        backgroundColor: const Color(0xFF41B06E), 
         foregroundColor: Colors.white,
       ),
-      // 1. Tambahkan SingleChildScrollView agar halaman bisa di-scroll
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Menampilkan gambar hasil deteksi
             Image.file(
               File(imagePath),
-              fit: BoxFit.cover, // Agar gambar memenuhi lebar layar
+              fit: BoxFit.cover, 
+              height: 360, 
             ),
             const SizedBox(height: 24),
             Padding(

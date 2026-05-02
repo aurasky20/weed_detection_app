@@ -19,33 +19,6 @@ class _MainNavigationState extends State<MainNavigation> {
   /// 🔥 kalau di HOME → double tap untuk exit
   DateTime now = DateTime.now();
 
-  // if (lastBackPressTime == null ||
-  //     now.difference(lastBackPressTime!) > Duration(seconds: 2)) {
-  //   lastBackPressTime = now;
-
-  //   return false;
-  // }
-
-  /// 🔥 tampilkan dialog exit
-//   return await showDialog(
-//     context: context,
-//     builder: (context) => AlertDialog(
-//       title: Text("Keluar"),
-//       content: Text("Apakah Anda ingin keluar dari aplikasi?"),
-//       actions: [
-//         TextButton(
-//           onPressed: () => Navigator.pop(context, false),
-//           child: Text("Tidak"),
-//         ),
-//         TextButton(
-//           onPressed: () => Navigator.pop(context, true),
-//           child: Text("Ya"),
-//         ),
-//       ],
-//     ),
-//   );
-// }
-
   @override
   void initState() {
     super.initState();

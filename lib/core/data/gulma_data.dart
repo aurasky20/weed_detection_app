@@ -63,7 +63,7 @@ class GulmaData {
       ),
     ],
 
-    "Gulma Teki-teki": [
+    "Gulma Teki-tekian": [
       Weed(
         name: "Cyperus bervifolius",
         image: "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Cyperus_bervifolius_ny8j9r.jpg",
