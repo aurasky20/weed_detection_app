@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../pages/result_page.dart';
+import '../../result/pages/result_page.dart';
 import '../controllers/camera_controller.dart';
 // import '../pages/preview_page.dart';
 

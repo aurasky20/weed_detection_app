@@ -20,6 +20,7 @@ dependencies:
   tflite_flutter: ^0.12.1
   persistent_bottom_nav_bar_v2: ^6.3.2
   google_fonts: ^8.1.0
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:
