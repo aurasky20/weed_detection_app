@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weedcheck/features/history/service/history_service.dart';
-
+import 'package:weedcheck/features/result/widgets/popup_save_widget.dart';
+import '../../../features/history/controller/history_controller.dart';
 
 class SaveHistoryButton extends StatefulWidget {
   final String result;
@@ -20,35 +20,54 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
   bool _saved = false;
   bool _loading = false;
 
-  Future<void> _save() async {
-    if (_saved || _loading) return;
+  // Cek apakah hasil deteksi valid (terdeteksi gulma)
+  bool get _canSave =>
+      widget.result.isNotEmpty &&
+      !widget.result.toLowerCase().contains('tidak') &&
+      !widget.result.toLowerCase().contains('unknown') &&
+      !widget.result.toLowerCase().contains('not');
+
+  Future<void> _onTap() async {
+    if (_saved || _loading || !_canSave) return;
+
+    // Tampilkan dialog konfirmasi
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => SaveDialog(result: widget.result),
+    );
+  
+
+    if (ok != true || !mounted) return;
+
     setState(() => _loading = true);
 
-    final entry = HistoryEntry(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      weedName: widget.result.isNotEmpty ? widget.result : "Tidak Dikenali",
+    final controller = HistoryController();
+    final success = await controller.saveEntry(
+      result: widget.result,
       imagePath: widget.imagePath,
-      detectedAt: DateTime.now(),
     );
-
-    await HistoryService.save(entry);
 
     if (!mounted) return;
     setState(() {
       _loading = false;
-      _saved = true;
+      if (success) _saved = true;
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Row(
+        content: Row(
           children: [
-            Icon(Icons.check_circle_rounded,
-                color: Color(0xFFFFDD34), size: 16),
-            SizedBox(width: 8),
+            Icon(
+              success
+                  ? Icons.check_circle_rounded
+                  : Icons.error_outline_rounded,
+              color: const Color(0xFFFFDD34),
+              size: 16,
+            ),
+            const SizedBox(width: 8),
             Text(
-              "Disimpan ke riwayat",
-              style: TextStyle(
+              success ? 'Disimpan ke riwayat' : 'Gagal menyimpan',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -68,8 +87,36 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
 
   @override
   Widget build(BuildContext context) {
+    // Jika tidak terdeteksi, tombol non-aktif
+    if (!_canSave) {
+      return Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F0F0),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: const Color(0xFFDDDDDD)),
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.bookmark, color: Color(0xFFBBBBBB), size: 18),
+            SizedBox(width: 8),
+            Text(
+              'Tidak Dapat Disimpan',
+              style: TextStyle(
+                color: Color(0xFFBBBBBB),
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return GestureDetector(
-      onTap: _save,
+      onTap: _onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         width: double.infinity,
@@ -106,7 +153,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
                   ),
             const SizedBox(width: 8),
             Text(
-              _saved ? "Tersimpan" : "Simpan ke Riwayat",
+              _saved ? 'Tersimpan' : 'Simpan ke Riwayat',
               style: const TextStyle(
                 color: Color(0xFF41B06E),
                 fontSize: 14,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/result/widgets/card_widget.dart';
 import 'package:weedcheck/features/result/widgets/result_action_btn.dart';
-// import 'package:weedcheck/features/result/widgets/saveHistory_widget.dart';
 import 'package:weedcheck/features/result/widgets/header_widget.dart';
 import 'package:weedcheck/features/result/widgets/imageResult_widget.dart';
+import 'package:weedcheck/features/result/widgets/save_history_widget.dart';
 
 class ResultPage extends StatelessWidget {
   final String result;
@@ -51,13 +51,13 @@ class ResultPage extends StatelessWidget {
                           detected: _detected,
                         ),
 
-                        // const SizedBox(height: 12),
+                        const SizedBox(height: 12),
 
-                        /// Save to history button
-                        // SaveHistoryButton(
-                        //   result: result,
-                        //   imagePath: imagePath,
-                        // ),
+                        //Save to history button
+                        SaveHistoryButton(
+                          result: result,
+                          imagePath: imagePath,
+                        ),
 
                         const SizedBox(height: 20),
 

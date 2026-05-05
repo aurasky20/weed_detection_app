@@ -1,7 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:weedcheck/features/history/service/history_service.dart';
+import 'package:weedcheck/features/history/widgets/history_detail_page.dart';
+import 'package:weedcheck/features/history/widgets/popup_delete_widget.dart';
+import '../controller/history_controller.dart';
+import '../widgets/history_card_widget.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -11,39 +13,52 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  List<HistoryEntry> _entries = [];
-  bool _loading = true;
+  final _controller = HistoryController();
 
   @override
   void initState() {
     super.initState();
-    _load();
+    _controller.loadHistory();
+    _controller.addListener(_onUpdate);
   }
 
-  Future<void> _load() async {
-    setState(() => _loading = true);
-    final entries = await HistoryService.loadAll();
-    if (!mounted) return;
-    setState(() {
-      _entries = entries;
-      _loading = false;
-    });
+  void _onUpdate() {
+    if (mounted) setState(() {});
   }
 
-  Future<void> _delete(String id) async {
-    await HistoryService.delete(id);
-    await _load();
+  @override
+  void dispose() {
+    _controller.removeListener(_onUpdate);
+    super.dispose();
   }
 
-  Future<void> _clearAll() async {
-    final confirmed = await showDialog<bool>(
+  Future<void> _onRefresh() async {
+    await _controller.loadHistory();
+  }
+
+  Future<void> _confirmDelete(String id) async {
+    final ok = await showDialog<bool>(
       context: context,
-      builder: (_) => const _ClearConfirmDialog(),
+      builder: (_) => const DeleteDialog(
+        title: "Hapus Riwayat?",
+        message: "Item ini akan dihapus permanen.",
+      ),
     );
-    if (confirmed == true) {
-      await HistoryService.clearAll();
-      await _load();
-    }
+
+    if (ok == true) await _controller.deleteEntry(id);
+  }
+
+  Future<void> _confirmClearAll() async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => const DeleteDialog(
+        title: "Hapus Semua?",
+        message: "Seluruh riwayat akan dihapus permanen.",
+        confirmText: "Hapus Semua",
+      ),
+    );
+
+    if (ok == true) await _controller.clearAll();
   }
 
   @override
@@ -54,40 +69,41 @@ class _HistoryPageState extends State<HistoryPage> {
         backgroundColor: const Color(0xFFF6FBF7),
         body: Column(
           children: [
-            /// Header
-            const _HistoryHeader(),
-
-            /// Content
+            _buildHeader(context),
             Expanded(
-              child: _loading
+              child: _controller.loading
                   ? const Center(
                       child: CircularProgressIndicator(
-                        color: Color(0xFF41B06E),
-                        strokeWidth: 2.5,
-                      ),
+                          color: Color(0xFF41B06E)),
                     )
-                  : _entries.isEmpty
-                      ? const _EmptyState()
-                      : Column(
-                          children: [
-                            /// Clear all row
-                            _ClearAllRow(onClear: _clearAll),
-
-                            /// List
-                            Expanded(
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                padding: const EdgeInsets.fromLTRB(
-                                    16, 8, 16, 24),
-                                itemCount: _entries.length,
-                                itemBuilder: (_, i) => _HistoryTile(
-                                  entry: _entries[i],
-                                  onDelete: () =>
-                                      _delete(_entries[i].id),
-                                ),
-                              ),
+                  : _controller.entries.isEmpty
+                      ? _buildEmpty()
+                      : RefreshIndicator(
+                          color: const Color(0xFF41B06E),
+                          onRefresh: _onRefresh,
+                          child: ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(
+                              parent: BouncingScrollPhysics(),
                             ),
-                          ],
+                            padding:
+                                const EdgeInsets.symmetric(vertical: 12),
+                            itemCount: _controller.entries.length,
+                            itemBuilder: (_, i) {
+                              final entry = _controller.entries[i];
+                              return HistoryCard(
+                                entry: entry,
+                                onDelete: () => _confirmDelete(entry.id),
+                                onTap: () => Navigator.of(context, rootNavigator: true).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) => HistoryDetailPage(entry: entry),
+                                    transitionsBuilder: (_, animation, __, child) {
+                                      return FadeTransition(opacity: animation, child: child);
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
             ),
           ],
@@ -95,14 +111,8 @@ class _HistoryPageState extends State<HistoryPage> {
       ),
     );
   }
-}
 
-// ─── HEADER ────────────────────────────────────────────────────────────────────
-class _HistoryHeader extends StatelessWidget {
-  const _HistoryHeader();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -121,362 +131,128 @@ class _HistoryHeader extends StatelessWidget {
       ),
       child: SafeArea(
         bottom: false,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Center(
-            child: Text(
-              "Riwayat Deteksi",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.3,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ─── CLEAR ALL ROW ─────────────────────────────────────────────────────────────
-class _ClearAllRow extends StatelessWidget {
-  final VoidCallback onClear;
-  const _ClearAllRow({required this.onClear});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-      child: Row(
-        children: [
-          Text(
-            "Semua Riwayat",
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF18230F).withOpacity(0.5),
-            ),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: onClear,
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFEEE8),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                    color: const Color(0xFFEF9651).withOpacity(0.4)),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.delete_sweep_rounded,
-                      color: Color(0xFFEF9651), size: 13),
-                  SizedBox(width: 4),
-                  Text(
-                    "Hapus Semua",
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFEF9651),
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          child: Row(
+            children: [
+              Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color(0xFFFFDD34).withOpacity(0.5),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.eco_rounded,
+                      color: Color(0xFFFFDD34),
+                      size: 22,
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-// ─── HISTORY TILE ──────────────────────────────────────────────────────────────
-class _HistoryTile extends StatelessWidget {
-  final HistoryEntry entry;
-  final VoidCallback onDelete;
+              const SizedBox(width: 12),
 
-  const _HistoryTile({required this.entry, required this.onDelete});
-
-  String _formatDate(DateTime dt) {
-    final months = [
-      '', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
-      'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
-    ];
-    final h = dt.hour.toString().padLeft(2, '0');
-    final m = dt.minute.toString().padLeft(2, '0');
-    return "${dt.day} ${months[dt.month]} ${dt.year}, $h:$m";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-            color: const Color(0xFF41B06E).withOpacity(0.12)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF41B06E).withOpacity(0.07),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          /// Thumbnail
-          ClipRRect(
-            borderRadius: const BorderRadius.horizontal(
-                left: Radius.circular(13)),
-            child: SizedBox(
-              width: 72,
-              height: 72,
-              child: Image.file(
-                File(entry.imagePath),
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
-                  color: const Color(0xFFF0FAF4),
-                  child: const Icon(Icons.eco_rounded,
-                      color: Color(0xFF87D05F), size: 28),
-                ),
-              ),
-            ),
-          ),
-
-          /// Info
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 14, vertical: 12),
-              child: Column(
+              // Judul
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    entry.weedName,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF18230F),
+                    'Riwayat Deteksi',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.5,
+                      height: 1.1,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(Icons.access_time_rounded,
-                          size: 11,
-                          color: const Color(0xFF18230F).withOpacity(0.35)),
-                      const SizedBox(width: 3),
-                      Text(
-                        _formatDate(entry.detectedAt),
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: const Color(0xFF18230F).withOpacity(0.4),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Hasil deteksi yang tersimpan',
+                    style: TextStyle(
+                      color: Color(0xFFFFE432),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 0.2,
+                    ),
                   ),
                 ],
               ),
-            ),
-          ),
 
-          /// Delete button
-          GestureDetector(
-            onTap: onDelete,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFEEE8),
-                  borderRadius: BorderRadius.circular(8),
+              const Spacer(),
+
+              // Tombol hapus semua
+              if (_controller.entries.isNotEmpty)
+                GestureDetector(
+                  onTap: _confirmClearAll,
+                  child: Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.3),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.delete_sweep_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
                 ),
-                child: const Icon(Icons.delete_outline_rounded,
-                    color: Color(0xFFEF9651), size: 16),
-              ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── EMPTY STATE ───────────────────────────────────────────────────────────────
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0FAF4),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                  color: const Color(0xFF87D05F).withOpacity(0.3)),
-            ),
-            child: const Icon(Icons.history_rounded,
-                color: Color(0xFF41B06E), size: 34),
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            "Belum ada riwayat",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF18230F),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            "Hasil deteksi akan muncul di sini\nsetelah Anda menyimpannya.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 13,
-              color: const Color(0xFF18230F).withOpacity(0.45),
-              height: 1.55,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── CLEAR CONFIRM DIALOG ──────────────────────────────────────────────────────
-class _ClearConfirmDialog extends StatelessWidget {
-  const _ClearConfirmDialog();
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 36),
-      child: Container(
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
         ),
-        child: Column(
+      ),
+    );
+  }
+
+  Widget _buildEmpty() {
+    return ListView(
+      // Pakai ListView agar RefreshIndicator tetap bisa ditarik saat kosong
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+        Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFEEE8),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: const Icon(Icons.delete_sweep_rounded,
-                  color: Color(0xFFEF9651), size: 24),
-            ),
+            Icon(Icons.history_rounded,
+                size: 72,
+                color: const Color(0xFF87D05F).withOpacity(0.4)),
             const SizedBox(height: 16),
             const Text(
-              "Hapus Semua Riwayat?",
+              'Belum ada riwayat deteksi',
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF18230F),
+                color: Color(0xFF8FB88A),
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              "Semua data riwayat akan dihapus\ndan tidak dapat dikembalikan.",
+            const SizedBox(height: 6),
+            const Text(
+              'Hasil deteksi yang disimpan\nakan muncul di sini.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
-                color: const Color(0xFF18230F).withOpacity(0.5),
-                height: 1.5,
-              ),
+              style: TextStyle(color: Color(0xFFB0C8AA), fontSize: 13),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context, false),
-                    child: Container(
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF0FAF4),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                            color: const Color(0xFF87D05F)
-                                .withOpacity(0.3)),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Batal",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF41B06E),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context, true),
-                    child: Container(
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEF9651),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFEF9651)
-                                .withOpacity(0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Hapus",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 12),
+            const Text(
+              'Tarik ke bawah untuk memperbarui',
+              style: TextStyle(
+                color: Color(0xFFB0C8AA),
+                fontSize: 12,
+              ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
