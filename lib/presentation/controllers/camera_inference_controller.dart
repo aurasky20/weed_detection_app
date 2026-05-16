@@ -14,13 +14,13 @@ class CameraInferenceController extends ChangeNotifier {
   int _frameCount = 0;
   DateTime _lastFpsUpdate = DateTime.now();
 
-  double _confidenceThreshold = 0.25;
+  double _confidenceThreshold = 0.50;
   double _iouThreshold = 0.7;
-  int _numItemsThreshold = 30;
+  int _numItemsThreshold = 15;
   SliderType _activeSlider = SliderType.none;
 
   YOLOTask _selectedTask = YOLOTask.detect;
-  String _selectedModel = 'assets/models/best.tflite';
+  String _selectedModel = 'assets/models/n_train5.tflite';
 
   double _currentZoomLevel = 1.0;
   LensFacing _lensFacing = LensFacing.front;
@@ -38,7 +38,10 @@ class CameraInferenceController extends ChangeNotifier {
   YOLOTask get selectedTask => _selectedTask;
   String get selectedModel => _selectedModel;
   List<YOLOTask> get availableTasks => [YOLOTask.detect];
-  List<String> get availableModels => ['assets/models/best.tflite'];
+  List<String> get availableModels => [
+    'assets/models/n_train5.tflite',
+    'assets/models/n_train6.tflite',
+  ];
   String get modelPath => _selectedModel;
   double get currentZoomLevel => _currentZoomLevel;
   bool get isFrontCamera => _isFrontCamera;

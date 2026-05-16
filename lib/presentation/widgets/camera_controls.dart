@@ -40,11 +40,11 @@ class CameraControls extends StatelessWidget {
                 ControlButton.text(
                   label: '${currentZoomLevel.toStringAsFixed(1)}x',
                   onPressed: () => onZoomChanged(
-                    currentZoomLevel < 0.75
+                    currentZoomLevel < 1.0
                         ? 1.0
                         : currentZoomLevel < 2.0
                         ? 3.0
-                        : 0.5,
+                        : 1.0,
                   ),
                 ),
               SizedBox(height: isLandscape ? 8 : 12),

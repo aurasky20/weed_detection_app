@@ -22,6 +22,14 @@ class ModelSelector extends StatelessWidget {
   final ValueChanged<YOLOTask> onTaskChanged;
   final ValueChanged<String> onModelChanged;
 
+  String _formatModelName(String path) {
+    final fileName = path.split('/').last;
+    return fileName
+        .replaceAll('.tflite', '')
+        .replaceAll('_', ' ')
+        .toUpperCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,7 +53,7 @@ class ModelSelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            (selectedModel.isEmpty ? 'NO MODEL' : selectedModel).toUpperCase(),
+            _formatModelName(selectedModel),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 12,
@@ -62,7 +70,7 @@ class ModelSelector extends StatelessWidget {
                 .map(
                   (model) => PopupMenuItem<String>(
                     value: model,
-                    child: Text(model.toUpperCase()),
+                    child: Text(_formatModelName(model)),
                   ),
                 )
                 .toList(),

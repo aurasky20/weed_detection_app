@@ -70,8 +70,8 @@ class ThresholdSlider extends StatelessWidget {
     _ => 0,
   };
 
-  double _getSliderMin() => activeSlider == SliderType.numItems ? 5 : 0.1;
-  double _getSliderMax() => activeSlider == SliderType.numItems ? 50 : 0.9;
+  double _getSliderMin() => activeSlider == SliderType.numItems ? 3 : 0.1;
+  double _getSliderMax() => activeSlider == SliderType.numItems ? 30 : 0.9;
   int _getSliderDivisions() => activeSlider == SliderType.numItems ? 9 : 8;
   String _getSliderLabel() => switch (activeSlider) {
     SliderType.numItems => '$numItemsThreshold',
