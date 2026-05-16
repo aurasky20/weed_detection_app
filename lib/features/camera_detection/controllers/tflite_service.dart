@@ -6,7 +6,7 @@ class TFLiteService {
   late Interpreter _interpreter;
 
   Future<void> loadModel() async {
-    _interpreter = await Interpreter.fromAsset('assets/models/best_float32.tflite');
+    _interpreter = await Interpreter.fromAsset('assets/models/YOLOv8n_float32.tflite');
   }
 
   /// PREPROCESS IMAGE

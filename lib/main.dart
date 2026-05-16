@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/splash_screen.dart';
+import 'package:weedcheck/presentation/screens/camera_inference_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'WeedCheck',
-      home: const SplashScreen(), // Mulai dari sini
+      home: CameraInferenceScreen(),
     );
   }
 }

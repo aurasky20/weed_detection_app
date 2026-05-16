@@ -23,6 +23,8 @@ dependencies:
   tflite_flutter: ^0.12.1
   google_fonts: ^8.1.0
   shared_preferences: ^2.5.5
+  ultralytics_yolo: ^0.3.4
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -36,7 +38,6 @@ flutter:
 
   assets:
   - assets/models/
-  - assets/models/best_float16.tflite
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
