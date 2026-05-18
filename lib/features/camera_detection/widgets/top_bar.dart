@@ -21,13 +21,7 @@ class TopBar extends StatelessWidget {
         child: Stack(
           alignment: AlignmentGeometry.center,
           children: [
-            Positioned(
-              left: 10,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: onBack,
-              ),
-            ),
+            SizedBox(width: 10), // Placeholder untuk menjaga title tetap di tengah
             Center(
               child: Text(
                 "Camera",

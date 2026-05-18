@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weedcheck/features/streaming/screens/camera_inference_screen.dart';
 import '../controllers/camera_controller.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/camera_view.dart';
@@ -11,6 +12,7 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   late CameraControllerX _controller;
+  CameraMode _currentMode = CameraMode.camera;
 
   @override
   void initState() {
@@ -21,12 +23,29 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   void dispose() {
-    // Stop stream first, then dispose
     _controller.cameraController?.stopImageStream();
     _controller.disposeCamera().then((_) {
       print("Hardware kamera berhasil dimatikan");
     });
     super.dispose();
+  }
+
+  void _onModeChanged(CameraMode mode) { 
+    if (mode == _currentMode) return; 
+    if (mode == CameraMode.streaming) { 
+      // Matikan kamera sebelum pindah ke streaming 
+      _controller.cameraController?.stopImageStream(); 
+      Navigator.push( 
+        context, 
+        MaterialPageRoute(
+          builder: (_) => const CameraInferenceScreen()), 
+      ).then((_) { 
+        // Kembali ke mode kamera saat user kembali dari streaming 
+        setState(() { 
+          _currentMode = CameraMode.camera; 
+        }); _controller.initCamera(); 
+      });
+    } 
   }
 
   @override
@@ -42,13 +61,13 @@ class _CameraPageState extends State<CameraPage> {
               controller: _controller,
               onFlashToggle: () async {
                 await _controller.toggleFlash();
-                setState(() {}); 
+                setState(() {});
               },
               onBack: () => Navigator.pop(context),
             ),
           ),
 
-          /// 📸 3/6
+          /// 📸 5/6
           Expanded(
             flex: 5,
             child: CameraView(controller: _controller),
@@ -60,9 +79,11 @@ class _CameraPageState extends State<CameraPage> {
             child: BottomControls(
               controller: _controller,
               parentContext: context,
+              currentMode: _currentMode,
+              onModeChanged: _onModeChanged,
               onFlip: () async {
                 await _controller.flipCamera();
-                setState(() {}); 
+                setState(() {});
               },
             ),
           ),

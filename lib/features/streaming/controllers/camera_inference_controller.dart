@@ -1,5 +1,3 @@
-// Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
-
 import 'package:flutter/material.dart';
 import 'package:ultralytics_yolo/widgets/yolo_controller.dart';
 import 'package:ultralytics_yolo/yolo.dart';
@@ -23,7 +21,7 @@ class CameraInferenceController extends ChangeNotifier {
   String _selectedModel = 'assets/models/n_train5.tflite';
 
   double _currentZoomLevel = 1.0;
-  LensFacing _lensFacing = LensFacing.front;
+  LensFacing _lensFacing = LensFacing.back;
   bool _isFrontCamera = false;
 
   final _yoloController = YOLOViewController();

@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../result/pages/result_page.dart';
 import '../controllers/camera_controller.dart';
-// import '../pages/preview_page.dart';
 
-class BottomControls extends StatelessWidget {
+enum CameraMode { camera, streaming }
+
+class BottomControls extends StatefulWidget {
   final CameraControllerX controller;
   final BuildContext parentContext;
   final VoidCallback onFlip;
+  final CameraMode currentMode;
+  final ValueChanged<CameraMode> onModeChanged;
 
   const BottomControls({
     required this.controller,
     required this.parentContext,
     required this.onFlip,
+    required this.currentMode,
+    required this.onModeChanged,
   });
 
-  
+  @override
+  State<BottomControls> createState() => _BottomControlsState();
+}
+
+class _BottomControlsState extends State<BottomControls> {
   @override
   Widget build(BuildContext context) {
     final picker = ImagePicker();
@@ -23,115 +32,182 @@ class BottomControls extends StatelessWidget {
     return Container(
       color: Colors.black,
       child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            /// 📂 GALERI
-            IconButton(
-              icon: Icon(Icons.image, color: Colors.white, size: 30),
-              onPressed: () async {
-                final file = await picker.pickImage(source: ImageSource.gallery);
-
-                if (file != null) {
-                  try {
-                    String result = await controller.detectImage(file.path);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ResultPage(
-                          result: result,
-                          imagePath: file.path,
-                        ),
-                      ),
-                    );
-                  } catch (e) {
-                    print("ERROR DETEKSI: $e");
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Gagal mendeteksi gambar")),
-                    );
-                  }
-                }
-              },
-            ),
-
-            /// 📸 CAPTURE
-            GestureDetector(
-              onTap: () async {
-                // Tampilkan loading
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (_) => const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
+            /// 🔀 MODE SWITCHER
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _ModeTab(
+                    label: 'Kamera',
+                    isActive: widget.currentMode == CameraMode.camera,
+                    onTap: () => widget.onModeChanged(CameraMode.camera),
                   ),
-                );
-
-                final file = await controller.takePicture();
-
-                // Tutup loading
-                if (context.mounted) Navigator.of(context).pop();
-
-                if (file != null) {
-                  try {
-                    String result = await controller.detectImage(file.path);
-
-                    if (context.mounted) {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ResultPage(
-                            result: result,
-                            imagePath: file.path,
-                          ),
-                        ),
-                      );
-                    }
-                  } catch (e) {
-                    print("ERROR DETEKSI: $e");
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Gagal mendeteksi gambar")),
-                      );
-                    }
-                  }
-
-                  if (controller.cameraController != null) {
-                    controller.cameraController!.startImageStream((image) {
-                      controller.processFrame(image);
-                    });
-                  }
-                }
-              },
-              child: Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 4),
-                ),
-                child: Center(
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      '|',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.4),
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
+                  _ModeTab(
+                    label: 'Streaming',
+                    isActive: widget.currentMode == CameraMode.streaming,
+                    onTap: () => widget.onModeChanged(CameraMode.streaming),
+                  ),
+                ],
               ),
             ),
 
-            /// 🔄 FLIP
-            IconButton(
-              icon: Icon(Icons.cameraswitch,
-                  color: Colors.white, size: 30),
-              onPressed: onFlip,
+            SizedBox(height: 20),
+
+            /// 🎮 CONTROLS ROW
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                /// 📂 GALERI
+                IconButton(
+                  icon: Icon(Icons.image, color: Colors.white, size: 30),
+                  onPressed: () async {
+                    final file =
+                        await picker.pickImage(source: ImageSource.gallery);
+
+                    if (file != null) {
+                      try {
+                        String result =
+                            await widget.controller.detectImage(file.path);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ResultPage(
+                              result: result,
+                              imagePath: file.path,
+                            ),
+                          ),
+                        );
+                      } catch (e) {
+                        print("ERROR DETEKSI: $e");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Gagal mendeteksi gambar")),
+                        );
+                      }
+                    }
+                  },
+                ),
+
+                /// 📸 CAPTURE
+                GestureDetector(
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (_) => const Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
+                    );
+
+                    final file = await widget.controller.takePicture();
+
+                    if (context.mounted) Navigator.of(context).pop();
+
+                    if (file != null) {
+                      try {
+                        String result =
+                            await widget.controller.detectImage(file.path);
+
+                        if (context.mounted) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ResultPage(
+                                result: result,
+                                imagePath: file.path,
+                              ),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        print("ERROR DETEKSI: $e");
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Gagal mendeteksi gambar")),
+                          );
+                        }
+                      }
+
+                      if (widget.controller.cameraController != null) {
+                        widget.controller.cameraController!
+                            .startImageStream((image) {
+                          widget.controller.processFrame(image);
+                        });
+                      }
+                    }
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 4),
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                /// 🔄 FLIP
+                IconButton(
+                  icon:
+                      Icon(Icons.cameraswitch, color: Colors.white, size: 30),
+                  onPressed: widget.onFlip,
+                ),
+              ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ModeTab extends StatelessWidget {
+  final String label;
+  final bool isActive;
+  final VoidCallback onTap;
+
+  const _ModeTab({
+    required this.label,
+    required this.isActive,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Text(
+        label,
+        style: TextStyle(
+          color: isActive ? Colors.white : Colors.white.withOpacity(0.4),
+          fontSize: 15,
+          fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+          letterSpacing: 0.3,
         ),
       ),
     );
