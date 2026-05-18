@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weedcheck/features/streaming/screens/camera_inference_screen.dart';
+import 'package:weedcheck/features/streaming/pages/camera_inference_screen.dart';
 import '../controllers/camera_controller.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/camera_view.dart';

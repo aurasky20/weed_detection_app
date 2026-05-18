@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/splash_screen.dart';
-import 'package:weedcheck/features/streaming/screens/camera_inference_screen.dart';
+import 'package:weedcheck/features/streaming/pages/camera_inference_screen.dart';
 
 void main() {
   runApp(const MyApp());
