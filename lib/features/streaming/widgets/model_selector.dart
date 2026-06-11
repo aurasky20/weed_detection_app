@@ -40,44 +40,69 @@ class ModelSelector extends StatelessWidget {
   }
 
   Widget _buildModelPicker() {
-    return Container(
-      height: 36,
-      width: 200,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.6),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            _formatModelName(selectedModel),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+    return PopupMenuButton<String>(
+    color: const Color(0xFF2D2D2D), // warna background dropdown
+    onSelected: onModelChanged,
+    itemBuilder: (_) => [
+      const PopupMenuItem<String>(
+        enabled: false,
+        child: SizedBox(
+          width: 200,
+          child: Text(
+            textAlign: TextAlign.center,
+            '-- Choose Model --',
+            style: TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(width: 6),
-          PopupMenuButton<String>(
-            padding: EdgeInsets.zero,
-            elevation: 2,
-            enabled: availableModels.isNotEmpty,
-            onSelected: onModelChanged,
-            itemBuilder: (_) => availableModels
-                .map(
-                  (model) => PopupMenuItem<String>(
-                    value: model,
-                    child: Text(_formatModelName(model)),
-                  ),
-                )
-                .toList(),
-            child: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
-          ),
-        ],
+        ),
       ),
-    );
+
+      // const PopupMenuDivider(),
+
+      ...availableModels.map(
+        (model) => PopupMenuItem<String>(
+          value: model,
+          child: SizedBox(
+            width: 200,
+            child: Text(
+              textAlign: TextAlign.center,
+              _formatModelName(model),
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ],
+  child: Container(
+    width: 200,
+    height: 40,
+    padding: const EdgeInsets.symmetric(horizontal: 12),
+    decoration: BoxDecoration(
+      color: Colors.black.withOpacity(0.6),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(color: Colors.white24),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          _formatModelName(selectedModel),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.white,
+        ),
+      ],
+    ),
+  ),
+);
   }
 }

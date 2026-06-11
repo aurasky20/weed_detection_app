@@ -19,7 +19,8 @@ class ResultPage extends StatelessWidget {
       result.isNotEmpty &&
       !result.toLowerCase().contains("tidak") &&
       !result.toLowerCase().contains("unknown") &&
-      !result.toLowerCase().contains("not");
+      !result.toLowerCase().contains("not") && 
+      !result.toLowerCase().contains("too dark");
 
   @override
   Widget build(BuildContext context) {

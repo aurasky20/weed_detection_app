@@ -25,7 +25,8 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
       widget.result.isNotEmpty &&
       !widget.result.toLowerCase().contains('tidak') &&
       !widget.result.toLowerCase().contains('unknown') &&
-      !widget.result.toLowerCase().contains('not');
+      !widget.result.toLowerCase().contains('not') &&
+      !widget.result.toLowerCase().contains('too dark');
 
   Future<void> _onTap() async {
     if (_saved || _loading || !_canSave) return;

@@ -6,7 +6,7 @@ class TFLiteService {
   late Interpreter _interpreter;
 
   Future<void> loadModel() async {
-    _interpreter = await Interpreter.fromAsset('assets/models/n_train5.tflite');
+    _interpreter = await Interpreter.fromAsset('assets/models/s_train6.tflite');
   }
 
   /// PREPROCESS IMAGE
