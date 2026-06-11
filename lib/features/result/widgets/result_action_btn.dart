@@ -35,7 +35,7 @@ class ResultActionButtons extends StatelessWidget {
                     color: Color(0xFFFFDD34), size: 18),
                 SizedBox(width: 8),
                 Text(
-                  "Scan Ulang",
+                  "Scan Again",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -70,7 +70,7 @@ class ResultActionButtons extends StatelessWidget {
                     color: Color(0xFF41B06E), size: 18),
                 SizedBox(width: 8),
                 Text(
-                  "Kembali ke Beranda",
+                  "Back to Home",
                   style: TextStyle(
                     color: Color(0xFF41B06E),
                     fontSize: 14,

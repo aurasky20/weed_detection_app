@@ -148,10 +148,10 @@ class CameraControllerX extends ChangeNotifier {
     final bytes = await File(path).readAsBytes();
     final image = img.decodeImage(bytes);
 
-    if (image == null) return "Gagal membaca gambar";
+    if (image == null) return "Failed to read image";
 
     if (_isImageTooDark(image)) {
-      return "Gambar terlalu gelap, harap cari tempat yang lebih terang";
+      return "Image is too dark, please find a brighter location";
     }
 
     final tflite = TFLiteService();
@@ -191,12 +191,12 @@ class CameraControllerX extends ChangeNotifier {
     print("BEST SCORE: $bestScore");
     
     if (bestClass == -1 || bestScore < 0.53) {
-      return "Tidak terdeteksi gulma";
+      return "Weed Not Detected";
     }
 
     // Pastikan indeks bestClass tidak melebihi jumlah label yang Anda buat
     if (bestClass >= Labels.labels.length) {
-      return "Terdeteksi (Label Error)";
+      return "Weed Detected (Label Error)";
     }
 
     return "${Labels.labels[bestClass]} (${(bestScore * 100).toStringAsFixed(1)}%)";

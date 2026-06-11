@@ -18,7 +18,7 @@ class CameraInferenceController extends ChangeNotifier {
   SliderType _activeSlider = SliderType.none;
 
   YOLOTask _selectedTask = YOLOTask.detect;
-  String _selectedModel = 'assets/models/n_train5.tflite';
+  String _selectedModel = 'assets/models/n_train6.tflite';
 
   double _currentZoomLevel = 1.0;
   LensFacing _lensFacing = LensFacing.back;
@@ -37,8 +37,8 @@ class CameraInferenceController extends ChangeNotifier {
   String get selectedModel => _selectedModel;
   List<YOLOTask> get availableTasks => [YOLOTask.detect];
   List<String> get availableModels => [
-    'assets/models/n_train5.tflite',
     'assets/models/n_train6.tflite',
+    'assets/models/s_train6.tflite',
   ];
   String get modelPath => _selectedModel;
   double get currentZoomLevel => _currentZoomLevel;

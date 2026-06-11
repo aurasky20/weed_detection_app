@@ -18,7 +18,7 @@ class CameraInferenceOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).padding.top + (isLandscape ? 8 : 16),
+      top: MediaQuery.of(context).padding.top + (isLandscape ? 2 : 4),
       left: isLandscape ? 8 : 16,
       right: isLandscape ? 8 : 16,
       child: Column(

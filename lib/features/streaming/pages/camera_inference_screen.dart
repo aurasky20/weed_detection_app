@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weedcheck/features/camera_detection/widgets/bottom_controls.dart';
-import 'package:weedcheck/features/streaming/widgets/streaming_bar.dart';
 import '../controllers/camera_inference_controller.dart';
 import '../widgets/camera_inference_content.dart';
 import '../widgets/camera_inference_overlay.dart';
@@ -102,13 +100,7 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
           ),
 
           /// 🔀 BOTTOM MODE SWITCHER — style sama dengan CameraPage
-          StreamingBottomBar(
-            onModeChanged: (mode) {
-              if (mode == CameraMode.camera) {
-                Navigator.pop(context);
-              }
-            },
-          ),
+          _StreamingBottomBar(),
         ],
       ),
     );
@@ -141,19 +133,11 @@ class _StreamingTopBar extends StatelessWidget {
       color: Colors.black,
       child: SafeArea(
         bottom: false,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: 10,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: onBack,
-              ),
-            ),
-            const Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Center(
               child: Text(
-                'Camera',
+                'Streaming',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -161,8 +145,21 @@ class _StreamingTopBar extends StatelessWidget {
                 ),
               ),
             ),
-          ],
+          ),
         ),
+
+    );
+  }
+}
+
+class _StreamingBottomBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      child: SafeArea(
+        top: false,
+        child: const SizedBox(height: 20),
       ),
     );
   }

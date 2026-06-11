@@ -42,6 +42,7 @@ class ModelSelector extends StatelessWidget {
   Widget _buildModelPicker() {
     return Container(
       height: 36,
+      width: 200,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.black.withValues(alpha: 0.6),
@@ -49,6 +50,7 @@ class ModelSelector extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             _formatModelName(selectedModel),

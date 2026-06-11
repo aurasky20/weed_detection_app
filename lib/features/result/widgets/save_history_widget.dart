@@ -66,7 +66,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
             ),
             const SizedBox(width: 8),
             Text(
-              success ? 'Disimpan ke riwayat' : 'Gagal menyimpan',
+              success ? 'Saved to history' : 'Failed to save',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -103,7 +103,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
             Icon(Icons.bookmark, color: Color(0xFFBBBBBB), size: 18),
             SizedBox(width: 8),
             Text(
-              'Tidak Dapat Disimpan',
+              'Cannot Be Saved',
               style: TextStyle(
                 color: Color(0xFFBBBBBB),
                 fontSize: 14,
@@ -153,7 +153,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
                   ),
             const SizedBox(width: 8),
             Text(
-              _saved ? 'Tersimpan' : 'Simpan ke Riwayat',
+              _saved ? 'Saved' : 'Save to History',
               style: const TextStyle(
                 color: Color(0xFF41B06E),
                 fontSize: 14,
