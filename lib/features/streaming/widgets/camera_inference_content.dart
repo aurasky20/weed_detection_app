@@ -30,6 +30,7 @@ class CameraInferenceContent extends StatelessWidget {
             controller.onPerformanceMetrics(metrics.fps),
         onZoomChanged: controller.onZoomChanged,
         lensFacing: controller.lensFacing,
+        showOverlays: false,
       );
     } else {
       return const Center(

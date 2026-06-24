@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../controllers/camera_inference_controller.dart';
 import '../widgets/camera_inference_content.dart';
 import '../widgets/camera_inference_overlay.dart';
+import '../widgets/weed_detection_overlay.dart';
 import '../widgets/camera_controls.dart';
 import '../widgets/threshold_slider.dart';
 
@@ -71,6 +72,9 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
                       key: ValueKey('camera_content_$_rebuildKey'),
                       controller: _controller,
                       rebuildKey: _rebuildKey,
+                    ),
+                    WeedDetectionOverlay(
+                      detections: _controller.lastDetections,
                     ),
                     CameraInferenceOverlay(
                       controller: _controller,

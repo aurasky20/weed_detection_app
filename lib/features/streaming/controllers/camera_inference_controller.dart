@@ -7,6 +7,32 @@ enum SliderType { none, numItems, confidence, iou }
 
 /// Controller that manages the state and business logic for camera inference.
 class CameraInferenceController extends ChangeNotifier {
+  // Map nama kelas dari model → label English
+  static const Map<String, String> labelTranslations = {
+    'Broadleaf weed': 'Broadleaf Weed',
+    'Narrowleaf weed': 'Narrowleaf Weed', 
+    'Sadges': 'Sedge',
+    // Tambahkan juga versi Indonesia jika model masih output bahasa Indonesia
+    'Gulma daun lebar': 'Broadleaf Weed',
+    'Gulma daun sempit': 'Narrowleaf Weed',
+    'Gulma teki-tekian': 'Sedge',
+  };
+
+  static final Map<String, Color> classColors = {
+    'Broadleaf weed':   const Color.fromARGB(255, 34, 0, 255).withOpacity(0.8), // Biru
+    'Narrowleaf weed':  const Color.fromARGB(255, 225, 0, 255).withOpacity(0.8), // Ungu
+    'Sadges':           const Color.fromARGB(255, 255, 17, 0).withOpacity(0.8), // Merah
+    'Gulma daun lebar': const Color.fromARGB(255, 34, 0, 255).withOpacity(0.8),
+    'Gulma daun sempit':const Color.fromARGB(255, 225, 0, 255).withOpacity(0.8),
+    'Gulma teki-tekian':const Color.fromARGB(255, 255, 17, 0).withOpacity(0.8),
+  };
+
+  static Color colorForClass(String className) =>
+    classColors[className] ?? Colors.white;
+
+  static String translateLabel(String className) =>
+    labelTranslations[className] ?? className;
+
   int _detectionCount = 0;
   double _currentFps = 0.0;
   int _frameCount = 0;
@@ -40,6 +66,10 @@ class CameraInferenceController extends ChangeNotifier {
     'assets/models/n_train6.tflite',
     'assets/models/s_train6.tflite',
   ];
+
+  List<YOLOResult> _lastDetections = [];
+  List<YOLOResult> get lastDetections => _lastDetections;
+
   String get modelPath => _selectedModel;
   double get currentZoomLevel => _currentZoomLevel;
   bool get isFrontCamera => _isFrontCamera;
@@ -75,10 +105,10 @@ class CameraInferenceController extends ChangeNotifier {
       _lastFpsUpdate = now;
     }
 
-    if (_detectionCount != results.length) {
-      _detectionCount = results.length;
-      notifyListeners();
-    }
+    // Simpan deteksi terbaru
+    _lastDetections = results;         // ← TAMBAH INI
+    _detectionCount = results.length;
+    notifyListeners();
   }
 
   void onPerformanceMetrics(double fps) {
