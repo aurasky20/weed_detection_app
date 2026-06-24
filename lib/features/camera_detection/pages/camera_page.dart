@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
+import 'package:weedcheck/features/tutorial/camera_tutorial.dart';
 import '../controllers/camera_controller.dart';
 import '../widgets/top_bar.dart';
 import '../widgets/camera_view.dart';
@@ -11,6 +13,12 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   late CameraControllerX _controller;
+
+  final GlobalKey infoKey = GlobalKey();
+  final GlobalKey flashKey = GlobalKey();
+  final GlobalKey galleryKey = GlobalKey();
+  final GlobalKey flipKey = GlobalKey();
+  final GlobalKey captureKey = GlobalKey();
 
   @override
   void initState() {
@@ -27,31 +35,54 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+Widget build(BuildContext context) {
+  return ShowCaseWidget(
+    builder: (context) => Scaffold(
       backgroundColor: Colors.black,
       body: Column(
         children: [
+
           Expanded(
             flex: 1,
             child: TopBar(
               controller: _controller,
+              infoKey: infoKey,
+              flashKey: flashKey,
+
+              onShowTutorial: () {
+                CameraTutorial.start(
+                  context,
+                  infoKey: infoKey,
+                  flashKey: flashKey,
+                  galleryKey: galleryKey,
+                  flipKey: flipKey,
+                  captureKey: captureKey,
+                );
+              },
+
               onFlashToggle: () async {
                 await _controller.toggleFlash();
                 setState(() {});
               },
-              onBack: () => Navigator.pop(context),
             ),
           ),
+
           Expanded(
             flex: 5,
-            child: CameraView(controller: _controller),
+            child: CameraView(
+              controller: _controller,
+            ),
           ),
+
           Expanded(
             flex: 2,
             child: BottomControls(
               controller: _controller,
               parentContext: context,
+              galleryKey: galleryKey,
+              flipKey: flipKey,
+              captureKey: captureKey,
+
               onFlip: () async {
                 await _controller.flipCamera();
                 setState(() {});
@@ -60,6 +91,7 @@ class _CameraPageState extends State<CameraPage> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
