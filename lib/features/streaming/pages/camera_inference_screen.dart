@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weedcheck/features/streaming/widgets/topBar_streaming.dart';
 import '../controllers/camera_inference_controller.dart';
 import '../widgets/camera_inference_content.dart';
 import '../widgets/camera_inference_overlay.dart';
@@ -59,7 +60,11 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
       body: Column(
         children: [
           /// 🔝 TOP BAR — style sama dengan CameraPage
-          _StreamingTopBar(onBack: () => Navigator.pop(context)),
+          StreamingTopBar(
+            onBack: () => Navigator.pop(context),
+            onFlashPressed: _controller.toggleFlash,
+            isFlashOn: _controller.isFlashOn,
+          ),
 
           /// 📸 CAMERA AREA
           Expanded(
@@ -103,8 +108,6 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
             ),
           ),
 
-          /// 🔀 BOTTOM MODE SWITCHER — style sama dengan CameraPage
-          _StreamingBottomBar(),
         ],
       ),
     );
@@ -125,46 +128,3 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
       );
 }
 
-/// Top bar bergaya sama dengan TopBar di CameraPage, tanpa flash dan tanpa back opsional
-class _StreamingTopBar extends StatelessWidget {
-  final VoidCallback onBack;
-
-  const _StreamingTopBar({required this.onBack});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Center(
-              child: Text(
-                'Streaming',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-
-    );
-  }
-}
-
-class _StreamingBottomBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: SafeArea(
-        top: false,
-        child: const SizedBox(height: 20),
-      ),
-    );
-  }
-}

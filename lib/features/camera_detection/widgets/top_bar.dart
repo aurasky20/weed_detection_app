@@ -6,9 +6,7 @@ import '../controllers/camera_controller.dart';
 class TopBar extends StatelessWidget {
   final VoidCallback onFlashToggle;
   final VoidCallback onShowTutorial;
-
   final CameraControllerX controller;
-
   final GlobalKey infoKey;
   final GlobalKey flashKey;
 

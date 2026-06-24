@@ -28,7 +28,6 @@ class CameraInferenceContent extends StatelessWidget {
         onResult: controller.onDetectionResults,
         onPerformanceMetrics: (metrics) =>
             controller.onPerformanceMetrics(metrics.fps),
-        onZoomChanged: controller.onZoomChanged,
         lensFacing: controller.lensFacing,
         showOverlays: false,
       );

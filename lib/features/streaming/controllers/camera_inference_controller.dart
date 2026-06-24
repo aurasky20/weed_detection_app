@@ -42,7 +42,7 @@ class CameraInferenceController extends ChangeNotifier {
   double _iouThreshold = 0.7;
   int _numItemsThreshold = 15;
   SliderType _activeSlider = SliderType.none;
-
+  
   YOLOTask _selectedTask = YOLOTask.detect;
   String _selectedModel = 'assets/models/n_train6.tflite';
 
@@ -52,7 +52,8 @@ class CameraInferenceController extends ChangeNotifier {
 
   final _yoloController = YOLOViewController();
   bool _isDisposed = false;
-
+  bool _isFlashOn = false;
+  bool get isFlashOn => _isFlashOn;
   int get detectionCount => _detectionCount;
   double get currentFps => _currentFps;
   double get confidenceThreshold => _confidenceThreshold;
@@ -75,6 +76,12 @@ class CameraInferenceController extends ChangeNotifier {
   bool get isFrontCamera => _isFrontCamera;
   LensFacing get lensFacing => _lensFacing;
   YOLOViewController get yoloController => _yoloController;
+
+  Future<void> toggleFlash() async {
+    _isFlashOn = !_isFlashOn;
+    await _yoloController.setTorchMode(_isFlashOn);
+    notifyListeners();
+  }
 
   static String _defaultModelForTask(YOLOTask task) {
     final defaultModel = YOLO.defaultOfficialModel(task: task);
@@ -119,14 +126,6 @@ class CameraInferenceController extends ChangeNotifier {
     }
   }
 
-  void onZoomChanged(double zoomLevel) {
-    if (_isDisposed) return;
-    if ((_currentZoomLevel - zoomLevel).abs() > 0.01) {
-      _currentZoomLevel = zoomLevel;
-      notifyListeners();
-    }
-  }
-
   void toggleSlider(SliderType type) {
     if (_isDisposed) return;
     _activeSlider = _activeSlider == type ? SliderType.none : type;
@@ -154,11 +153,19 @@ class CameraInferenceController extends ChangeNotifier {
         }
         break;
       case SliderType.iou:
-        if ((_iouThreshold - value).abs() > 0.01) {
-          _iouThreshold = value;
-          _yoloController.setIoUThreshold(value);
-          changed = true;
+        double mappedIoU;
+
+        if (value == 0) {
+          mappedIoU = 0.25;
+        } else if (value == 1) {
+          mappedIoU = 0.5;
+        } else {
+          mappedIoU = 0.75;
         }
+
+        _iouThreshold = mappedIoU;
+        _yoloController.setIoUThreshold(mappedIoU);
+        changed = true;
         break;
       case SliderType.none:
         break;
@@ -212,4 +219,5 @@ class CameraInferenceController extends ChangeNotifier {
     _yoloController.stop();
     super.dispose();
   }
+  
 }

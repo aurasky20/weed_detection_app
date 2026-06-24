@@ -35,7 +35,7 @@ class ControlButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: 24,
-      backgroundColor: Colors.black.withValues(alpha: 0.2),
+      backgroundColor: Colors.black.withValues(alpha: 0.25),
       child: _buildContent(),
     );
   }

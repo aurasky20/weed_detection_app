@@ -47,6 +47,7 @@ class ThresholdSlider extends StatelessWidget {
             inactiveTrackColor: Colors.white.withValues(alpha: 0.3),
             thumbColor: Colors.yellow,
             overlayColor: Colors.yellow.withValues(alpha: 0.2),
+            valueIndicatorColor: const Color.fromARGB(255, 228, 82, 37),
           ),
           child: Slider(
             value: _getSliderValue(),
@@ -61,20 +62,50 @@ class ThresholdSlider extends StatelessWidget {
     );
   }
 
-  double _getSliderValue() => switch (activeSlider) {
-    SliderType.numItems => numItemsThreshold.toDouble(),
-    SliderType.confidence => confidenceThreshold,
-    SliderType.iou => iouThreshold,
-    _ => 0,
-  };
+  double _getSliderValue() {
+    if (activeSlider == SliderType.iou) {
+      if (iouThreshold <= 0.3) return 0;
+      if (iouThreshold <= 0.5) return 1;
+      return 2;
+    }
 
-  double _getSliderMin() => activeSlider == SliderType.numItems ? 3 : 0.1;
-  double _getSliderMax() => activeSlider == SliderType.numItems ? 30 : 0.9;
-  int _getSliderDivisions() => activeSlider == SliderType.numItems ? 9 : 8;
-  String _getSliderLabel() => switch (activeSlider) {
-    SliderType.numItems => '$numItemsThreshold',
-    SliderType.confidence => confidenceThreshold.toStringAsFixed(1),
-    SliderType.iou => iouThreshold.toStringAsFixed(1),
-    _ => '',
-  };
+    switch (activeSlider) {
+      case SliderType.numItems:
+        return numItemsThreshold.toDouble();
+
+      case SliderType.confidence:
+        return confidenceThreshold;
+
+      default:
+        return 0;
+    }
+  }
+
+  double _getSliderMin() =>
+    activeSlider == SliderType.iou ? 0 : 
+    activeSlider == SliderType.numItems ? 3 : 0.1;
+  double _getSliderMax() =>
+    activeSlider == SliderType.iou ? 2 :
+    activeSlider == SliderType.numItems ? 30 : 0.9;
+  int _getSliderDivisions() =>
+    activeSlider == SliderType.iou ? 2 :
+    activeSlider == SliderType.numItems ? 9 : 8;
+  String _getSliderLabel() {
+    if (activeSlider == SliderType.iou) {
+      if (iouThreshold <= 0.3) return 'Low';
+      if (iouThreshold <= 0.5) return 'Medium';
+      return 'High';
+    }
+
+    switch (activeSlider) {
+      case SliderType.numItems:
+        return '$numItemsThreshold';
+
+      case SliderType.confidence:
+        return confidenceThreshold.toStringAsFixed(1);
+
+      default:
+        return '';
+    }
+  }
 }

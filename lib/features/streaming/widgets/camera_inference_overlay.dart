@@ -18,12 +18,17 @@ class CameraInferenceOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).padding.top + (isLandscape ? 2 : 4),
+      top: isLandscape ? 1 : 16,
       left: isLandscape ? 8 : 16,
       right: isLandscape ? 8 : 16,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          DetectionStatsDisplay(
+            detectionCount: controller.detectionCount,
+            currentFps: controller.currentFps,
+          ),
+          SizedBox(height: isLandscape ? 8 : 12),
           ModelSelector(
             selectedTask: controller.selectedTask,
             selectedModel: controller.selectedModel,
@@ -31,11 +36,6 @@ class CameraInferenceOverlay extends StatelessWidget {
             availableModels: controller.availableModels,
             onTaskChanged: controller.changeTask,
             onModelChanged: controller.changeModel,
-          ),
-          SizedBox(height: isLandscape ? 8 : 12),
-          DetectionStatsDisplay(
-            detectionCount: controller.detectionCount,
-            currentFps: controller.currentFps,
           ),
           const SizedBox(height: 8),
           _buildThresholdPills(),

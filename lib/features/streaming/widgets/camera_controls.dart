@@ -34,18 +34,6 @@ class CameraControls extends StatelessWidget {
           right: (isLandscape ? 8 : 16) + (isLandscape ? viewPadding.right : 0),
           child: Column(
             children: [
-              if (!isFrontCamera)
-                ControlButton.text(
-                  label: '${currentZoomLevel.toStringAsFixed(1)}x',
-                  onPressed: () => onZoomChanged(
-                    currentZoomLevel < 1.0
-                        ? 1.0
-                        : currentZoomLevel < 2.0
-                        ? 3.0
-                        : 1.0,
-                  ),
-                ),
-              SizedBox(height: isLandscape ? 8 : 12),
               ControlButton.icon(
                 icon: Icons.layers,
                 onPressed: () => onSliderToggled(SliderType.numItems),
@@ -60,7 +48,7 @@ class CameraControls extends StatelessWidget {
                 assetPath: 'assets/iou.png',
                 onPressed: () => onSliderToggled(SliderType.iou),
               ),
-              SizedBox(height: isLandscape ? 16 : 40),
+              SizedBox(height: isLandscape ? 16 : 50),
             ],
           ),
         ),
@@ -68,7 +56,7 @@ class CameraControls extends StatelessWidget {
         Positioned(
           bottom:
               MediaQuery.of(context).padding.top +
-              (isLandscape ? 32 : 16) +
+              (isLandscape ? 16 : 50) +
               viewPadding.bottom,
           left: (isLandscape ? 32 : 16) + (isLandscape ? viewPadding.left : 0),
           child: CircleAvatar(

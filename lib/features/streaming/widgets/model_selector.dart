@@ -21,11 +21,15 @@ class ModelSelector extends StatelessWidget {
   final ValueChanged<String> onModelChanged;
 
   String _formatModelName(String path) {
-    final fileName = path.split('/').last;
-    return fileName
-        .replaceAll('.tflite', '')
-        .replaceAll('_', ' ')
-        .toUpperCase();
+    if (path.contains('n_train6')) {
+      return 'Fast Detection (YOLOv8n)';
+    }
+
+    if (path.contains('s_train6')) {
+      return 'Accurate Detection (YOLOv8s)';
+    }
+
+    return path;
   }
 
   @override
@@ -34,7 +38,6 @@ class ModelSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildModelPicker(),
-        const SizedBox(height: 8),
       ],
     );
   }
@@ -46,8 +49,9 @@ class ModelSelector extends StatelessWidget {
     itemBuilder: (_) => [
       const PopupMenuItem<String>(
         enabled: false,
+        height: 20,
         child: SizedBox(
-          width: 200,
+          width: 320,
           child: Text(
             textAlign: TextAlign.center,
             '-- Choose Model --',
@@ -59,13 +63,13 @@ class ModelSelector extends StatelessWidget {
         ),
       ),
 
-      // const PopupMenuDivider(),
-
+      const PopupMenuDivider(),
       ...availableModels.map(
         (model) => PopupMenuItem<String>(
           value: model,
+          height: 40,
           child: SizedBox(
-            width: 200,
+            width: 320,
             child: Text(
               textAlign: TextAlign.center,
               _formatModelName(model),
@@ -78,7 +82,7 @@ class ModelSelector extends StatelessWidget {
       ),
     ],
   child: Container(
-    width: 200,
+    width: 280,
     height: 40,
     padding: const EdgeInsets.symmetric(horizontal: 12),
     decoration: BoxDecoration(
