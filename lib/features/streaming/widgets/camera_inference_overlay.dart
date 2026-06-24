@@ -10,10 +10,16 @@ class CameraInferenceOverlay extends StatelessWidget {
     super.key,
     required this.controller,
     required this.isLandscape,
+    required this.detectionKey,
+    required this.fpsKey,
+    required this.modelKey,
   });
 
   final CameraInferenceController controller;
   final bool isLandscape;
+  final GlobalKey detectionKey;
+  final GlobalKey fpsKey;
+  final GlobalKey modelKey;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,8 @@ class CameraInferenceOverlay extends StatelessWidget {
           DetectionStatsDisplay(
             detectionCount: controller.detectionCount,
             currentFps: controller.currentFps,
+            detectionKey: detectionKey,
+            fpsKey: fpsKey,
           ),
           SizedBox(height: isLandscape ? 8 : 12),
           ModelSelector(
@@ -36,6 +44,7 @@ class CameraInferenceOverlay extends StatelessWidget {
             availableModels: controller.availableModels,
             onTaskChanged: controller.changeTask,
             onModelChanged: controller.changeModel,
+            modelKey: modelKey,
           ),
           const SizedBox(height: 8),
           _buildThresholdPills(),

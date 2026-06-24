@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weedcheck/features/history/pages/history_page.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -80,6 +81,21 @@ class HomeHeader extends StatelessWidget {
                 ),
 
                 const Spacer(),
+
+                IconButton(
+                  tooltip: "Riwayat",
+                  icon: const Icon(
+                    Icons.history,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HistoryPage()),
+                    );
+                  },
+                ),
               ],
             ),
           ),

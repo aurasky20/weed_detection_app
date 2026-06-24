@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ultralytics_yolo/models/yolo_task.dart';
+import 'package:weedcheck/features/tutorial/streaming_tutorial.dart';
 
 /// A widget for selecting the active YOLO task and official model.
 class ModelSelector extends StatelessWidget {
@@ -11,6 +12,7 @@ class ModelSelector extends StatelessWidget {
     required this.availableModels,
     required this.onTaskChanged,
     required this.onModelChanged,
+    required this.modelKey,
   });
 
   final YOLOTask selectedTask;
@@ -19,7 +21,7 @@ class ModelSelector extends StatelessWidget {
   final List<String> availableModels;
   final ValueChanged<YOLOTask> onTaskChanged;
   final ValueChanged<String> onModelChanged;
-
+  final GlobalKey modelKey;
   String _formatModelName(String path) {
     if (path.contains('n_train6')) {
       return 'Fast Detection (YOLOv8n)';
@@ -74,27 +76,33 @@ class ModelSelector extends StatelessWidget {
           ),
         ),
       ],
-      child: Container(
-        width: 280,
-        height: 40,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.6),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.white24),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              _formatModelName(selectedModel),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+      child: StreamingTutorial.tutorial(
+        key: modelKey,
+        title: "Model Selector",
+        description:
+            "Choose the detection mode based on your needs. Use YOLOv8n for faster processing with slightly lower accuracy, or YOLOv8s for higher accuracy with slightly slower processing.",
+        child: Container(
+          width: 280,
+          height: 40,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.6),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.white24),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _formatModelName(selectedModel),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            const Icon(Icons.arrow_drop_down, color: Colors.white),
-          ],
+              const Icon(Icons.arrow_drop_down, color: Colors.white),
+            ],
+          ),
         ),
       ),
     );
