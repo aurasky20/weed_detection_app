@@ -74,37 +74,43 @@ class _HistoryPageState extends State<HistoryPage> {
               child: _controller.loading
                   ? const Center(
                       child: CircularProgressIndicator(
-                          color: Color(0xFF41B06E)),
+                        color: Color(0xFF41B06E),
+                      ),
                     )
                   : _controller.entries.isEmpty
-                      ? _buildEmpty()
-                      : RefreshIndicator(
-                          color: const Color(0xFF41B06E),
-                          onRefresh: _onRefresh,
-                          child: ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(
-                              parent: BouncingScrollPhysics(),
-                            ),
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 12),
-                            itemCount: _controller.entries.length,
-                            itemBuilder: (_, i) {
-                              final entry = _controller.entries[i];
-                              return HistoryCard(
-                                entry: entry,
-                                onDelete: () => _confirmDelete(entry.id),
-                                onTap: () => Navigator.of(context, rootNavigator: true).push(
+                  ? _buildEmpty()
+                  : RefreshIndicator(
+                      color: const Color(0xFF41B06E),
+                      onRefresh: _onRefresh,
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics(),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        itemCount: _controller.entries.length,
+                        itemBuilder: (_, i) {
+                          final entry = _controller.entries[i];
+                          return HistoryCard(
+                            entry: entry,
+                            onDelete: () => _confirmDelete(entry.id),
+                            onTap: () =>
+                                Navigator.of(context, rootNavigator: true).push(
                                   PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => HistoryDetailPage(entry: entry),
-                                    transitionsBuilder: (_, animation, __, child) {
-                                      return FadeTransition(opacity: animation, child: child);
-                                    },
+                                    pageBuilder: (_, __, ___) =>
+                                        HistoryDetailPage(entry: entry),
+                                    transitionsBuilder:
+                                        (_, animation, __, child) {
+                                          return FadeTransition(
+                                            opacity: animation,
+                                            child: child,
+                                          );
+                                        },
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
+                          );
+                        },
+                      ),
+                    ),
             ),
           ],
         ),
@@ -132,27 +138,26 @@ class _HistoryPageState extends State<HistoryPage> {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           child: Row(
             children: [
               Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: const Color(0xFFFFDD34).withOpacity(0.5),
-                        width: 1.5,
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.eco_rounded,
-                      color: Color(0xFFFFDD34),
-                      size: 22,
-                    ),
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: const Color(0xFFFFDD34).withOpacity(0.5),
+                    width: 1.5,
                   ),
+                ),
+                child: const Icon(
+                  Icons.eco_rounded,
+                  color: Color(0xFFFFDD34),
+                  size: 22,
+                ),
+              ),
 
               const SizedBox(width: 12),
 
@@ -224,9 +229,11 @@ class _HistoryPageState extends State<HistoryPage> {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.history_rounded,
-                size: 72,
-                color: const Color(0xFF87D05F).withOpacity(0.4)),
+            Icon(
+              Icons.history_rounded,
+              size: 72,
+              color: const Color(0xFF87D05F).withOpacity(0.4),
+            ),
             const SizedBox(height: 16),
             const Text(
               'Belum ada riwayat deteksi',
@@ -245,10 +252,7 @@ class _HistoryPageState extends State<HistoryPage> {
             const SizedBox(height: 12),
             const Text(
               'Tarik ke bawah untuk memperbarui',
-              style: TextStyle(
-                color: Color(0xFFB0C8AA),
-                fontSize: 12,
-              ),
+              style: TextStyle(color: Color(0xFFB0C8AA), fontSize: 12),
             ),
           ],
         ),

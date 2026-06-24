@@ -37,7 +37,10 @@ class _CameraViewState extends State<CameraView> {
                 children: [
                   CircularProgressIndicator(color: Colors.white),
                   SizedBox(height: 12),
-                  Text("Memuat kamera...", style: TextStyle(color: Colors.white)),
+                  Text(
+                    "Memuat kamera...",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),
@@ -50,8 +53,10 @@ class _CameraViewState extends State<CameraView> {
             GestureDetector(
               onScaleStart: (_) => _baseZoom = _zoom,
               onScaleUpdate: (details) async {
-                double zoom = (_baseZoom * details.scale)
-                    .clamp(widget.controller.minZoom, widget.controller.maxZoom);
+                double zoom = (_baseZoom * details.scale).clamp(
+                  widget.controller.minZoom,
+                  widget.controller.maxZoom,
+                );
                 _zoom = zoom;
                 await widget.controller.setZoom(zoom);
               },
@@ -68,7 +73,8 @@ class _CameraViewState extends State<CameraView> {
                 ),
               ),
             ),
-        ]);
+          ],
+        );
       },
     );
   }

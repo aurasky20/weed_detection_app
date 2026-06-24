@@ -9,17 +9,13 @@ class ResultPage extends StatelessWidget {
   final String result;
   final String imagePath;
 
-  const ResultPage({
-    super.key,
-    required this.result,
-    required this.imagePath,
-  });
+  const ResultPage({super.key, required this.result, required this.imagePath});
 
   bool get _detected =>
       result.isNotEmpty &&
       !result.toLowerCase().contains("tidak") &&
       !result.toLowerCase().contains("unknown") &&
-      !result.toLowerCase().contains("not") && 
+      !result.toLowerCase().contains("not") &&
       !result.toLowerCase().contains("too dark");
 
   @override
@@ -47,18 +43,12 @@ class ResultPage extends StatelessWidget {
                     child: Column(
                       children: [
                         /// Detection result card
-                        ResultCard(
-                          result: result,
-                          detected: _detected,
-                        ),
+                        ResultCard(result: result, detected: _detected),
 
                         const SizedBox(height: 12),
 
                         //Save to history button
-                        SaveHistoryButton(
-                          result: result,
-                          imagePath: imagePath,
-                        ),
+                        SaveHistoryButton(result: result, imagePath: imagePath),
 
                         const SizedBox(height: 20),
 

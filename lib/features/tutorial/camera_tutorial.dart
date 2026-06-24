@@ -10,13 +10,9 @@ class CameraTutorial {
     required GlobalKey flipKey,
     required GlobalKey captureKey,
   }) {
-    ShowCaseWidget.of(context).startShowCase([
-      infoKey,
-      flashKey,
-      galleryKey,
-      flipKey,
-      captureKey,
-    ]);
+    ShowCaseWidget.of(
+      context,
+    ).startShowCase([infoKey, flashKey, galleryKey, flipKey, captureKey]);
   }
 
   static Widget tutorial({
@@ -40,10 +36,7 @@ class CameraTutorial {
       ),
       descriptionPadding: const EdgeInsets.only(top: 4),
       descriptionTextAlign: TextAlign.center,
-      descTextStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 14,
-      ),
+      descTextStyle: const TextStyle(color: Colors.white, fontSize: 14),
       tooltipBackgroundColor: const Color(0xff2E7D32),
       child: child,
     );

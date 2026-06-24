@@ -25,12 +25,9 @@ class TopBar extends StatelessWidget {
       color: Colors.black,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-
               /// INFO
               CameraTutorial.tutorial(
                 key: infoKey,
@@ -39,10 +36,7 @@ class TopBar extends StatelessWidget {
                     "Tap this button whenever you need to view the camera tutorial again.",
                 child: IconButton(
                   onPressed: onShowTutorial,
-                  icon: const Icon(
-                    Icons.info_outline,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.info_outline, color: Colors.white),
                 ),
               ),
 

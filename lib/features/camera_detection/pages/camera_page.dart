@@ -35,63 +35,57 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return ShowCaseWidget(
-    builder: (context) => Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
+  Widget build(BuildContext context) {
+    return ShowCaseWidget(
+      builder: (context) => Scaffold(
+        backgroundColor: Colors.black,
+        body: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: TopBar(
+                controller: _controller,
+                infoKey: infoKey,
+                flashKey: flashKey,
 
-          Expanded(
-            flex: 1,
-            child: TopBar(
-              controller: _controller,
-              infoKey: infoKey,
-              flashKey: flashKey,
+                onShowTutorial: () {
+                  CameraTutorial.start(
+                    context,
+                    infoKey: infoKey,
+                    flashKey: flashKey,
+                    galleryKey: galleryKey,
+                    flipKey: flipKey,
+                    captureKey: captureKey,
+                  );
+                },
 
-              onShowTutorial: () {
-                CameraTutorial.start(
-                  context,
-                  infoKey: infoKey,
-                  flashKey: flashKey,
-                  galleryKey: galleryKey,
-                  flipKey: flipKey,
-                  captureKey: captureKey,
-                );
-              },
-
-              onFlashToggle: () async {
-                await _controller.toggleFlash();
-                setState(() {});
-              },
+                onFlashToggle: () async {
+                  await _controller.toggleFlash();
+                  setState(() {});
+                },
+              ),
             ),
-          ),
 
-          Expanded(
-            flex: 5,
-            child: CameraView(
-              controller: _controller,
+            Expanded(flex: 5, child: CameraView(controller: _controller)),
+
+            Expanded(
+              flex: 2,
+              child: BottomControls(
+                controller: _controller,
+                parentContext: context,
+                galleryKey: galleryKey,
+                flipKey: flipKey,
+                captureKey: captureKey,
+
+                onFlip: () async {
+                  await _controller.flipCamera();
+                  setState(() {});
+                },
+              ),
             ),
-          ),
-
-          Expanded(
-            flex: 2,
-            child: BottomControls(
-              controller: _controller,
-              parentContext: context,
-              galleryKey: galleryKey,
-              flipKey: flipKey,
-              captureKey: captureKey,
-
-              onFlip: () async {
-                await _controller.flipCamera();
-                setState(() {});
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

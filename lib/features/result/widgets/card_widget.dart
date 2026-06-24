@@ -4,11 +4,7 @@ class ResultCard extends StatelessWidget {
   final String result;
   final bool detected;
 
-  const ResultCard({
-    super.key,
-    required this.result,
-    required this.detected,
-  });
+  const ResultCard({super.key, required this.result, required this.detected});
 
   bool get isInvalidImage =>
       result.toLowerCase().contains("gelap") ||

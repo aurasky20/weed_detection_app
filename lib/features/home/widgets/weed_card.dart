@@ -39,7 +39,9 @@ class WeedCard extends StatelessWidget {
           children: [
             /// Image
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(11),
+              ),
               child: Container(
                 height: 100,
                 color: const Color(0xFFF4FCF0),
@@ -97,11 +99,7 @@ class _PlaceholderImage extends StatelessWidget {
     return Container(
       color: const Color(0xFFE8F5E9),
       child: const Center(
-        child: Icon(
-          Icons.eco_rounded,
-          color: Color(0xFF87D05F),
-          size: 36,
-        ),
+        child: Icon(Icons.eco_rounded, color: Color(0xFF87D05F), size: 36),
       ),
     );
   }

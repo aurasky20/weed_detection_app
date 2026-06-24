@@ -188,9 +188,7 @@ class _MainNavigationState extends State<MainNavigation> {
                     ],
                   ),
                   child: Icon(
-                    _showCameraMenu
-                        ? Icons.close_rounded
-                        : Icons.camera_alt,
+                    _showCameraMenu ? Icons.close_rounded : Icons.camera_alt,
                     color: Colors.white,
                     size: 30,
                   ),
@@ -255,12 +253,7 @@ class _FloatingMenuButton extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                shadows: [
-                  Shadow(
-                    color: Colors.black54,
-                    blurRadius: 4,
-                  ),
-                ],
+                shadows: [Shadow(color: Colors.black54, blurRadius: 4)],
               ),
             ),
           ],

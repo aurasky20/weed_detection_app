@@ -11,8 +11,11 @@ class HeroPlaceholder extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.eco_rounded,
-                color: const Color(0xFF41B06E).withOpacity(0.5), size: 64),
+            Icon(
+              Icons.eco_rounded,
+              color: const Color(0xFF41B06E).withOpacity(0.5),
+              size: 64,
+            ),
             const SizedBox(height: 8),
             Text(
               "Gambar tidak tersedia",

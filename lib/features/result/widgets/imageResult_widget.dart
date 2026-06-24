@@ -32,8 +32,11 @@ class _ImagePlaceholder extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.broken_image_rounded,
-                color: const Color(0xFF41B06E).withOpacity(0.4), size: 48),
+            Icon(
+              Icons.broken_image_rounded,
+              color: const Color(0xFF41B06E).withOpacity(0.4),
+              size: 48,
+            ),
             const SizedBox(height: 8),
             Text(
               "Image not available",

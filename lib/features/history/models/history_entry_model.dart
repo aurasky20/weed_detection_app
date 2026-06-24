@@ -12,16 +12,16 @@ class HistoryEntry {
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'weedName': weedName,
-        'imagePath': imagePath,
-        'detectedAt': detectedAt.toIso8601String(),
-      };
+    'id': id,
+    'weedName': weedName,
+    'imagePath': imagePath,
+    'detectedAt': detectedAt.toIso8601String(),
+  };
 
   factory HistoryEntry.fromJson(Map<String, dynamic> json) => HistoryEntry(
-        id: json['id'],
-        weedName: json['weedName'],
-        imagePath: json['imagePath'],
-        detectedAt: DateTime.parse(json['detectedAt']),
-      );
+    id: json['id'],
+    weedName: json['weedName'],
+    imagePath: json['imagePath'],
+    detectedAt: DateTime.parse(json['detectedAt']),
+  );
 }

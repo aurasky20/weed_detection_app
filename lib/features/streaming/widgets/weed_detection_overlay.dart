@@ -27,11 +27,11 @@ class _WeedPainter extends CustomPainter {
     for (final det in detections) {
       // Gunakan normalizedBox (0.0–1.0) lalu scale ke ukuran widget
       final box = det.normalizedBox; // ← pakai ini, bukan boundingBox
-      
+
       final rect = Rect.fromLTRB(
-        box.left   * size.width,
-        box.top    * size.height,
-        box.right  * size.width,
+        box.left * size.width,
+        box.top * size.height,
+        box.right * size.width,
         box.bottom * size.height,
       );
 
@@ -63,8 +63,10 @@ class _WeedPainter extends CustomPainter {
       )..layout();
 
       const padding = 4.0;
-      final labelTop = (rect.top - textPainter.height - padding * 2)
-          .clamp(0.0, size.height); // jangan sampai keluar layar atas
+      final labelTop = (rect.top - textPainter.height - padding * 2).clamp(
+        0.0,
+        size.height,
+      ); // jangan sampai keluar layar atas
 
       canvas.drawRect(
         Rect.fromLTWH(

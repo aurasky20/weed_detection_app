@@ -10,14 +10,14 @@ class WeedSpecificInfo extends StatelessWidget {
   const WeedSpecificInfo({super.key, required this.weed});
 
   String _getCategoryForWeed(Weed weed) {
-  // Mencari di setiap entry Map (Key: Nama Kategori, Value: List Weed)
-  for (var entry in GulmaData.data.entries) {
-    if (entry.value.contains(weed)) {
-      return entry.key; // Mengembalikan "Gulma Daun Lebar", dsb.
+    // Mencari di setiap entry Map (Key: Nama Kategori, Value: List Weed)
+    for (var entry in GulmaData.data.entries) {
+      if (entry.value.contains(weed)) {
+        return entry.key; // Mengembalikan "Gulma Daun Lebar", dsb.
+      }
     }
+    return "Spesifikasi Gulma"; // Fallback jika tidak ditemukan
   }
-  return "Spesifikasi Gulma"; // Fallback jika tidak ditemukan
-}
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,9 @@ class WeedSpecificInfo extends StatelessWidget {
                         /// Category chip
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: const Color(0xFF41B06E).withOpacity(0.85),
                             borderRadius: BorderRadius.circular(20),
@@ -126,8 +128,11 @@ class WeedSpecificInfo extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.eco_rounded,
-                                  color: Colors.white, size: 12),
+                              const Icon(
+                                Icons.eco_rounded,
+                                color: Colors.white,
+                                size: 12,
+                              ),
                               const SizedBox(width: 4),
                               Text(
                                 _getCategoryForWeed(weed),
@@ -196,7 +201,6 @@ class WeedSpecificInfo extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 32),
-
                 ],
               ),
             ),
@@ -206,4 +210,3 @@ class WeedSpecificInfo extends StatelessWidget {
     );
   }
 }
-

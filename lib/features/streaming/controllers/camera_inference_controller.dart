@@ -10,7 +10,7 @@ class CameraInferenceController extends ChangeNotifier {
   // Map nama kelas dari model → label English
   static const Map<String, String> labelTranslations = {
     'Broadleaf weed': 'Broadleaf Weed',
-    'Narrowleaf weed': 'Narrowleaf Weed', 
+    'Narrowleaf weed': 'Narrowleaf Weed',
     'Sadges': 'Sedge',
     // Tambahkan juga versi Indonesia jika model masih output bahasa Indonesia
     'Gulma daun lebar': 'Broadleaf Weed',
@@ -19,19 +19,34 @@ class CameraInferenceController extends ChangeNotifier {
   };
 
   static final Map<String, Color> classColors = {
-    'Broadleaf weed':   const Color.fromARGB(255, 34, 0, 255).withOpacity(0.8), // Biru
-    'Narrowleaf weed':  const Color.fromARGB(255, 225, 0, 255).withOpacity(0.8), // Ungu
-    'Sadges':           const Color.fromARGB(255, 255, 17, 0).withOpacity(0.8), // Merah
+    'Broadleaf weed': const Color.fromARGB(
+      255,
+      34,
+      0,
+      255,
+    ).withOpacity(0.8), // Biru
+    'Narrowleaf weed': const Color.fromARGB(
+      255,
+      225,
+      0,
+      255,
+    ).withOpacity(0.8), // Ungu
+    'Sadges': const Color.fromARGB(255, 255, 17, 0).withOpacity(0.8), // Merah
     'Gulma daun lebar': const Color.fromARGB(255, 34, 0, 255).withOpacity(0.8),
-    'Gulma daun sempit':const Color.fromARGB(255, 225, 0, 255).withOpacity(0.8),
-    'Gulma teki-tekian':const Color.fromARGB(255, 255, 17, 0).withOpacity(0.8),
+    'Gulma daun sempit': const Color.fromARGB(
+      255,
+      225,
+      0,
+      255,
+    ).withOpacity(0.8),
+    'Gulma teki-tekian': const Color.fromARGB(255, 255, 17, 0).withOpacity(0.8),
   };
 
   static Color colorForClass(String className) =>
-    classColors[className] ?? Colors.white;
+      classColors[className] ?? Colors.white;
 
   static String translateLabel(String className) =>
-    labelTranslations[className] ?? className;
+      labelTranslations[className] ?? className;
 
   int _detectionCount = 0;
   double _currentFps = 0.0;
@@ -42,7 +57,7 @@ class CameraInferenceController extends ChangeNotifier {
   double _iouThreshold = 0.7;
   int _numItemsThreshold = 15;
   SliderType _activeSlider = SliderType.none;
-  
+
   YOLOTask _selectedTask = YOLOTask.detect;
   String _selectedModel = 'assets/models/n_train6.tflite';
 
@@ -113,7 +128,7 @@ class CameraInferenceController extends ChangeNotifier {
     }
 
     // Simpan deteksi terbaru
-    _lastDetections = results;         // ← TAMBAH INI
+    _lastDetections = results; // ← TAMBAH INI
     _detectionCount = results.length;
     notifyListeners();
   }
@@ -219,5 +234,4 @@ class CameraInferenceController extends ChangeNotifier {
     _yoloController.stop();
     super.dispose();
   }
-  
 }

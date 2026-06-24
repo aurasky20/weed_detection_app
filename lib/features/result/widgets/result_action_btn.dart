@@ -31,8 +31,11 @@ class ResultActionButtons extends StatelessWidget {
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.document_scanner_rounded,
-                    color: Color(0xFFFFDD34), size: 18),
+                Icon(
+                  Icons.document_scanner_rounded,
+                  color: Color(0xFFFFDD34),
+                  size: 18,
+                ),
                 SizedBox(width: 8),
                 Text(
                   "Scan Again",
@@ -66,8 +69,7 @@ class ResultActionButtons extends StatelessWidget {
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.home_rounded,
-                    color: Color(0xFF41B06E), size: 18),
+                Icon(Icons.home_rounded, color: Color(0xFF41B06E), size: 18),
                 SizedBox(width: 8),
                 Text(
                   "Back to Home",

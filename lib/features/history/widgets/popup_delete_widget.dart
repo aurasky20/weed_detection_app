@@ -134,9 +134,7 @@ class DeleteDialog extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: const Color(0xFFE57373).withOpacity(0.2),
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: const Color(0xFFE57373),
-                          ),
+                          border: Border.all(color: const Color(0xFFE57373)),
                         ),
                         child: Center(
                           child: Text(

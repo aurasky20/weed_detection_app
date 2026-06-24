@@ -43,10 +43,7 @@ class SaveDialog extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.bookmark_rounded,
-                  color: Colors.white,
-                ),
+                child: const Icon(Icons.bookmark_rounded, color: Colors.white),
               ),
 
               const SizedBox(height: 20),

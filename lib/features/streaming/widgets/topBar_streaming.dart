@@ -41,9 +41,7 @@ class StreamingTopBar extends StatelessWidget {
               IconButton(
                 onPressed: onFlashPressed,
                 icon: Icon(
-                  isFlashOn
-                      ? Icons.flash_on
-                      : Icons.flash_off,
+                  isFlashOn ? Icons.flash_on : Icons.flash_off,
                   color: Colors.white,
                 ),
               ),

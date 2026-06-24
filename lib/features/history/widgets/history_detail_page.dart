@@ -10,8 +10,18 @@ class HistoryDetailPage extends StatelessWidget {
 
   String _formatDate(DateTime dt) {
     const months = [
-      'Januari','Februari','Maret','April','Mei','Juni',
-      'Juli','Agustus','September','Oktober','November','Desember'
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
     ];
     final h = dt.hour.toString().padLeft(2, '0');
     final m = dt.minute.toString().padLeft(2, '0');
@@ -83,8 +93,7 @@ class HistoryDetailPage extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           child: Row(
             children: [
               GestureDetector(
@@ -186,9 +195,7 @@ class HistoryDetailPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              detected
-                  ? Icons.eco_rounded
-                  : Icons.help_outline_rounded,
+              detected ? Icons.eco_rounded : Icons.help_outline_rounded,
               color: detected
                   ? const Color(0xFF41B06E)
                   : const Color(0xFFFFB300),

@@ -36,7 +36,6 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
       context: context,
       builder: (_) => SaveDialog(result: widget.result),
     );
-  
 
     if (ok != true || !mounted) return;
 
@@ -78,8 +77,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
         ),
         backgroundColor: const Color(0xFF18230F),
         behavior: SnackBarBehavior.floating,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         duration: const Duration(seconds: 2),
       ),
@@ -123,9 +121,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          color: _saved
-              ? const Color(0xFFF0FAF4)
-              : const Color(0xFFF4FCF0),
+          color: _saved ? const Color(0xFFF0FAF4) : const Color(0xFFF4FCF0),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: _saved

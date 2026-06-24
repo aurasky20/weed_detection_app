@@ -25,7 +25,7 @@ class TFLiteService {
         input[index++] = pixel.b / 255.0;
       }
     }
-    
+
     return input;
   }
 

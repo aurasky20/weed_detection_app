@@ -14,10 +14,7 @@ class ResultHeader extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF246A40),
-              Color(0xFF41B06E),
-            ],
+            colors: [Color(0xFF246A40), Color(0xFF41B06E)],
           ),
           boxShadow: [
             BoxShadow(

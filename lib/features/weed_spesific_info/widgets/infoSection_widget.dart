@@ -35,10 +35,7 @@ class InfoSection extends StatelessWidget {
             offset: const Offset(0, 1),
           ),
         ],
-        border: Border.all(
-          color: accentColor.withOpacity(0.20),
-          width: 1.5,
-        ),
+        border: Border.all(color: accentColor.withOpacity(0.20), width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +45,9 @@ class InfoSection extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color: iconBg,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(17)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(17),
+              ),
             ),
             child: Row(
               children: [
@@ -85,10 +84,7 @@ class InfoSection extends StatelessWidget {
           ),
 
           /// Divider
-          Container(
-            height: 1,
-            color: accentColor.withOpacity(0.08),
-          ),
+          Container(height: 1, color: accentColor.withOpacity(0.08)),
 
           /// Content
           Padding(

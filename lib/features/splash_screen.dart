@@ -10,11 +10,12 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    
+
     // Timer 3 detik untuk pindah ke halaman utama
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
@@ -35,10 +36,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF41B06E),
-              Color(0xFF2D7A4D),
-            ],
+            colors: [Color(0xFF41B06E), Color(0xFF2D7A4D)],
           ),
         ),
         child: Column(

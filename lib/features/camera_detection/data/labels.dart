@@ -1,8 +1,3 @@
 class Labels {
-  static const labels = [
-    "Broadleaf",
-    "Narrowleaf",
-    "Sadge",
-    "Not Weed",
-  ];
+  static const labels = ["Broadleaf", "Narrowleaf", "Sadge", "Not Weed"];
 }

@@ -5,7 +5,7 @@ import '../models/history_entry_model.dart';
 class HistoryCard extends StatelessWidget {
   final HistoryEntry entry;
   final VoidCallback onDelete;
-  final VoidCallback onTap;   // ← baru
+  final VoidCallback onTap; // ← baru
 
   const HistoryCard({
     super.key,
@@ -16,8 +16,18 @@ class HistoryCard extends StatelessWidget {
 
   String _formatDate(DateTime dt) {
     const months = [
-      'Jan','Feb','Mar','Apr','Mei','Jun',
-      'Jul','Agu','Sep','Okt','Nov','Des'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'Mei',
+      'Jun',
+      'Jul',
+      'Agu',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Des',
     ];
     final h = dt.hour.toString().padLeft(2, '0');
     final m = dt.minute.toString().padLeft(2, '0');
@@ -53,14 +63,15 @@ class HistoryCard extends StatelessWidget {
                 bottomLeft: Radius.circular(12),
               ),
               child: imageExists
-                  ? Image.file(file,
-                      width: 90, height: 90, fit: BoxFit.cover)
+                  ? Image.file(file, width: 90, height: 90, fit: BoxFit.cover)
                   : Container(
                       width: 90,
                       height: 90,
                       color: const Color(0xFFEEF7EC),
-                      child: const Icon(Icons.image_not_supported_outlined,
-                          color: Color(0xFF87D05F)),
+                      child: const Icon(
+                        Icons.image_not_supported_outlined,
+                        color: Color(0xFF87D05F),
+                      ),
                     ),
             ),
 
@@ -68,7 +79,9 @@ class HistoryCard extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 14, vertical: 12),
+                  horizontal: 14,
+                  vertical: 12,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -85,13 +98,18 @@ class HistoryCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Icons.access_time_rounded,
-                            size: 12, color: Color(0xFF8FB88A)),
+                        const Icon(
+                          Icons.access_time_rounded,
+                          size: 12,
+                          color: Color(0xFF8FB88A),
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           _formatDate(entry.detectedAt),
                           style: const TextStyle(
-                              fontSize: 11, color: Color(0xFF8FB88A)),
+                            fontSize: 11,
+                            color: Color(0xFF8FB88A),
+                          ),
                         ),
                       ],
                     ),
@@ -111,8 +129,11 @@ class HistoryCard extends StatelessWidget {
                     color: const Color(0xFFFFF0F0),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.delete_outline_rounded,
-                      color: Color(0xFFE57373), size: 18),
+                  child: const Icon(
+                    Icons.delete_outline_rounded,
+                    color: Color(0xFFE57373),
+                    size: 18,
+                  ),
                 ),
               ),
             ),

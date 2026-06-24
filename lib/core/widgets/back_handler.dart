@@ -18,7 +18,8 @@ class BackHandler {
 
     /// ⏱️ Double-tap to trigger exit dialog
     final now = DateTime.now();
-    final isFirstPress = _lastBackPressTime == null ||
+    final isFirstPress =
+        _lastBackPressTime == null ||
         now.difference(_lastBackPressTime!) > const Duration(seconds: 2);
 
     if (isFirstPress) {
@@ -29,7 +30,11 @@ class BackHandler {
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.info_outline_rounded, color: Color(0xFFFFDD34), size: 16),
+              Icon(
+                Icons.info_outline_rounded,
+                color: Color(0xFFFFDD34),
+                size: 16,
+              ),
               SizedBox(width: 8),
               Text(
                 "Tekan sekali lagi untuk keluar",
@@ -43,7 +48,9 @@ class BackHandler {
           ),
           backgroundColor: const Color(0xFF18230F),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           duration: const Duration(seconds: 2),
           elevation: 6,
@@ -55,8 +62,7 @@ class BackHandler {
 
     final shouldExit = await _showExitDialog(context) ?? false;
 
-      if (shouldExit) {
-
+    if (shouldExit) {
       SystemNavigator.pop();
     }
 

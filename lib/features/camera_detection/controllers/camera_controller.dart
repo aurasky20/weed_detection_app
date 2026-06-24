@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:weedcheck/features/camera_detection/data/labels.dart';
 import 'tflite_service.dart';
+
 class CameraControllerX extends ChangeNotifier {
   CameraController? cameraController;
   List<CameraDescription>? cameras;
@@ -43,7 +44,6 @@ class CameraControllerX extends ChangeNotifier {
       cameraController!.startImageStream((image) {
         processFrame(image);
       });
-
     } catch (e) {
       print("Camera init error: $e");
     }
@@ -58,7 +58,7 @@ class CameraControllerX extends ChangeNotifier {
   Future<void> _setupCamera(CameraDescription camera) async {
     cameraController = CameraController(
       camera,
-      ResolutionPreset.medium,  // was .high — this alone cuts lag significantly
+      ResolutionPreset.medium, // was .high — this alone cuts lag significantly
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.yuv420,
     );
@@ -96,34 +96,33 @@ class CameraControllerX extends ChangeNotifier {
   }
 
   Future<void> toggleFlash() async {
-    flashMode =
-        flashMode == FlashMode.off ? FlashMode.torch : FlashMode.off;
+    flashMode = flashMode == FlashMode.off ? FlashMode.torch : FlashMode.off;
 
     await cameraController?.setFlashMode(flashMode);
     notifyListeners();
   }
 
   Future<XFile?> takePicture() async {
-    if (cameraController == null || !cameraController!.value.isInitialized) return null;
+    if (cameraController == null || !cameraController!.value.isInitialized)
+      return null;
 
     try {
       // 1. Matikan stream secara total sebelum capture
       if (cameraController!.value.isStreamingImages) {
         await cameraController!.stopImageStream();
       }
-      
+
       // Beri jeda kecil agar hardware kamera siap berpindah mode dari stream ke capture
       await Future.delayed(const Duration(milliseconds: 100));
 
       final file = await cameraController!.takePicture();
-      
+
       return file;
     } catch (e) {
       print("takePicture error: $e");
       // Opsional: nyalakan lagi HANYA jika gagal capture
       return null;
     }
-    
   }
 
   Future<void> setZoom(double value) async {
@@ -164,20 +163,20 @@ class CameraControllerX extends ChangeNotifier {
     int bestClass = -1;
 
     // Mendapatkan jumlah baris data (biasanya 7 atau 8 tergantung jumlah class)
-    int numRows = output[0].length; 
+    int numRows = output[0].length;
     int numAnchors = output[0][0].length; // 8400
 
     for (int i = 0; i < numAnchors; i++) {
       double currentMaxScore = 0;
       int currentClass = -1;
 
-      // Loop mulai dari indeks 4 (skor class pertama) 
+      // Loop mulai dari indeks 4 (skor class pertama)
       // sampai akhir list (numRows)
-      for (int c = 4; c < numRows; c++) { 
+      for (int c = 4; c < numRows; c++) {
         double score = output[0][c][i];
         if (score > currentMaxScore) {
           currentMaxScore = score;
-          currentClass = c - 4; 
+          currentClass = c - 4;
         }
       }
 
@@ -189,7 +188,7 @@ class CameraControllerX extends ChangeNotifier {
 
     print("JUMLAH BARIS OUTPUT: $numRows"); // Cek di console nilainya berapa
     print("BEST SCORE: $bestScore");
-    
+
     if (bestClass == -1 || bestScore < 0.53) {
       return "Weed Not Detected";
     }
@@ -224,7 +223,6 @@ class CameraControllerX extends ChangeNotifier {
     _lastProcessedTime = now;
 
     try {
-
       // Guard: jangan update jika sudah dispose
       if (cameraController == null) return;
 
@@ -235,5 +233,4 @@ class CameraControllerX extends ChangeNotifier {
       isProcessing = false;
     }
   }
-
 }

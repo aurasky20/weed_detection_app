@@ -81,15 +81,21 @@ class ThresholdSlider extends StatelessWidget {
     }
   }
 
-  double _getSliderMin() =>
-    activeSlider == SliderType.iou ? 0 : 
-    activeSlider == SliderType.numItems ? 3 : 0.1;
-  double _getSliderMax() =>
-    activeSlider == SliderType.iou ? 2 :
-    activeSlider == SliderType.numItems ? 30 : 0.9;
-  int _getSliderDivisions() =>
-    activeSlider == SliderType.iou ? 2 :
-    activeSlider == SliderType.numItems ? 9 : 8;
+  double _getSliderMin() => activeSlider == SliderType.iou
+      ? 0
+      : activeSlider == SliderType.numItems
+      ? 3
+      : 0.1;
+  double _getSliderMax() => activeSlider == SliderType.iou
+      ? 2
+      : activeSlider == SliderType.numItems
+      ? 30
+      : 0.9;
+  int _getSliderDivisions() => activeSlider == SliderType.iou
+      ? 2
+      : activeSlider == SliderType.numItems
+      ? 9
+      : 8;
   String _getSliderLabel() {
     if (activeSlider == SliderType.iou) {
       if (iouThreshold <= 0.3) return 'Low';

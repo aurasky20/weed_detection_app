@@ -27,9 +27,7 @@ class HistoryController extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getStringList(_key) ?? [];
 
-    _entries = raw
-        .map((e) => HistoryEntry.fromJson(jsonDecode(e)))
-        .toList()
+    _entries = raw.map((e) => HistoryEntry.fromJson(jsonDecode(e))).toList()
       ..sort((a, b) => b.detectedAt.compareTo(a.detectedAt));
 
     _loading = false;
@@ -45,10 +43,9 @@ class HistoryController extends ChangeNotifier {
       // sebelum menambahkan entry baru, agar tidak menimpa data lama
       final prefs = await SharedPreferences.getInstance();
       final existing = prefs.getStringList(_key) ?? [];
-      _entries = existing
-          .map((e) => HistoryEntry.fromJson(jsonDecode(e)))
-          .toList()
-        ..sort((a, b) => b.detectedAt.compareTo(a.detectedAt));
+      _entries =
+          existing.map((e) => HistoryEntry.fromJson(jsonDecode(e))).toList()
+            ..sort((a, b) => b.detectedAt.compareTo(a.detectedAt));
 
       final savedPath = await _copyImageToAppDir(imagePath);
 

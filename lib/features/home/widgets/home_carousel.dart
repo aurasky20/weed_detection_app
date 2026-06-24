@@ -137,7 +137,7 @@ class _CarouselItem extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: const Color(0xFF246A40).withOpacity( 0.3),
+          color: const Color(0xFF246A40).withOpacity(0.3),
           width: 1.5,
         ),
       ),
@@ -218,11 +218,7 @@ class _CarouselItem extends StatelessWidget {
                       width: 1.5,
                     ),
                   ),
-                  child: Icon(
-                    slide.icon,
-                    color: Colors.white,
-                    size: 32,
-                  ),
+                  child: Icon(slide.icon, color: Colors.white, size: 32),
                 ),
               ],
             ),

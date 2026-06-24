@@ -36,77 +36,67 @@ class ModelSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildModelPicker(),
-      ],
+      children: [_buildModelPicker()],
     );
   }
 
   Widget _buildModelPicker() {
     return PopupMenuButton<String>(
-    color: const Color(0xFF2D2D2D), // warna background dropdown
-    onSelected: onModelChanged,
-    itemBuilder: (_) => [
-      const PopupMenuItem<String>(
-        enabled: false,
-        height: 20,
-        child: SizedBox(
-          width: 320,
-          child: Text(
-            textAlign: TextAlign.center,
-            '-- Choose Model --',
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ),
-
-      const PopupMenuDivider(),
-      ...availableModels.map(
-        (model) => PopupMenuItem<String>(
-          value: model,
-          height: 40,
+      color: const Color(0xFF2D2D2D), // warna background dropdown
+      onSelected: onModelChanged,
+      itemBuilder: (_) => [
+        const PopupMenuItem<String>(
+          enabled: false,
+          height: 20,
           child: SizedBox(
             width: 320,
             child: Text(
               textAlign: TextAlign.center,
-              _formatModelName(model),
-              style: const TextStyle(
-                color: Colors.white,
+              '-- Choose Model --',
+              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+
+        const PopupMenuDivider(),
+        ...availableModels.map(
+          (model) => PopupMenuItem<String>(
+            value: model,
+            height: 40,
+            child: SizedBox(
+              width: 320,
+              child: Text(
+                textAlign: TextAlign.center,
+                _formatModelName(model),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ),
         ),
-      ),
-    ],
-  child: Container(
-    width: 280,
-    height: 40,
-    padding: const EdgeInsets.symmetric(horizontal: 12),
-    decoration: BoxDecoration(
-      color: Colors.black.withOpacity(0.6),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: Colors.white24),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          _formatModelName(selectedModel),
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const Icon(
-          Icons.arrow_drop_down,
-          color: Colors.white,
-        ),
       ],
-    ),
-  ),
-);
+      child: Container(
+        width: 280,
+        height: 40,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.white24),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              _formatModelName(selectedModel),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Icon(Icons.arrow_drop_down, color: Colors.white),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -29,7 +29,6 @@ class ExitDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
               child: Column(
