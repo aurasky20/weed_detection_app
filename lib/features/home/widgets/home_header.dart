@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:weedcheck/features/history/pages/history_page.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -90,9 +91,10 @@ class HomeHeader extends StatelessWidget {
                     size: 30,
                   ),
                   onPressed: () {
-                    Navigator.push(
+                    pushScreen(
                       context,
-                      MaterialPageRoute(builder: (_) => const HistoryPage()),
+                      screen: const HistoryPage(),
+                      withNavBar: false,
                     );
                   },
                 ),

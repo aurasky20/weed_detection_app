@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:weedcheck/core/widgets/back_handler.dart';
+import 'package:weedcheck/features/other_info/info_page.dart';
 import '../../features/home/pages/home_page.dart';
 import '../../features/camera_detection/pages/camera_page.dart';
 import '../../features/streaming/pages/camera_inference_screen.dart';
-import '../../features/history/pages/history_page.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -23,36 +23,25 @@ class _MainNavigationState extends State<MainNavigation> {
     _controller = PersistentTabController(initialIndex: 0);
   }
 
-  void _toggleCameraMenu() {
-    setState(() => _showCameraMenu = !_showCameraMenu);
-  }
+  void _toggleCameraMenu() =>
+      setState(() => _showCameraMenu = !_showCameraMenu);
 
   void _closeCameraMenu() {
     if (_showCameraMenu) setState(() => _showCameraMenu = false);
   }
 
-  void _openCamera() {
+  Future<void> _openPage(Widget page) async {
     _closeCameraMenu();
-    Navigator.push(
+    await Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => CameraPage(),
+        pageBuilder: (_, __, ___) => page,
         transitionsBuilder: (_, animation, __, child) =>
             FadeTransition(opacity: animation, child: child),
+        transitionDuration: const Duration(milliseconds: 250),
       ),
-    ).then((_) => _controller.jumpToTab(0));
-  }
-
-  void _openStreaming() {
-    _closeCameraMenu();
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const CameraInferenceScreen(),
-        transitionsBuilder: (_, animation, __, child) =>
-            FadeTransition(opacity: animation, child: child),
-      ),
-    ).then((_) => _controller.jumpToTab(0));
+    );
+    _controller.jumpToTab(0);
   }
 
   @override
@@ -72,44 +61,43 @@ class _MainNavigationState extends State<MainNavigation> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            /// 🔽 NAVBAR + PAGE
+            /// ── Main NavBar + Pages
             PersistentTabView(
               controller: _controller,
               backgroundColor: Colors.transparent,
               tabs: [
-                /// 🏠 HOME
+                /// 🏠 Home
                 PersistentTabConfig(
-                  screen: HomePage(),
+                  screen: const HomePage(),
                   item: ItemConfig(
-                    icon: Icon(Icons.home),
+                    icon: const Icon(Icons.home_rounded),
                     title: "Home",
-                    activeForegroundColor: Colors.green,
+                    activeForegroundColor: const Color(0xFF41B06E),
                     inactiveForegroundColor: Colors.grey,
                   ),
                 ),
 
-                /// CAMERA TAB (placeholder, handled by floating button)
+                /// Camera placeholder (handled by floating button)
                 PersistentTabConfig(
-                  screen: HomePage(),
+                  screen: const HomePage(),
                   item: ItemConfig(
                     activeForegroundColor: Colors.transparent,
                     inactiveForegroundColor: Colors.transparent,
-                    icon: SizedBox.shrink(),
+                    icon: const SizedBox.shrink(),
                   ),
                 ),
 
-                /// 📜 HISTORY
+                /// ℹ️ Info
                 PersistentTabConfig(
-                  screen: HistoryPage(),
+                  screen: const InfoPage(),
                   item: ItemConfig(
-                    icon: Icon(Icons.history),
-                    title: "Riwayat",
-                    activeForegroundColor: Colors.green,
+                    icon: const Icon(Icons.info_outline_rounded),
+                    title: "Info",
+                    activeForegroundColor: const Color(0xFF41B06E),
                     inactiveForegroundColor: Colors.grey,
                   ),
                 ),
               ],
-
               onTabChanged: (index) {
                 if (index == 1) {
                   _controller.jumpToTab(0);
@@ -118,14 +106,13 @@ class _MainNavigationState extends State<MainNavigation> {
                   _closeCameraMenu();
                 }
               },
-
               navBarBuilder: (navBarConfig) => Style16BottomNavBar(
                 navBarConfig: navBarConfig,
                 navBarDecoration: NavBarDecoration(
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.08),
                       blurRadius: 12,
                     ),
                   ],
@@ -133,42 +120,40 @@ class _MainNavigationState extends State<MainNavigation> {
               ),
             ),
 
-            /// 🌑 BACKGROUND SCRIM — tap luar untuk tutup menu
+            /// ── Scrim when camera menu is open
             if (_showCameraMenu)
               Positioned.fill(
                 child: GestureDetector(
                   onTap: _closeCameraMenu,
-                  child: Container(color: Colors.black.withOpacity(0.35)),
+                  child: Container(
+                      color: Colors.black.withOpacity(0.35)),
                 ),
               ),
 
-            /// 🟢 FLOATING CAMERA OPTION BUTTONS
+            /// ── Floating menu buttons
             if (_showCameraMenu) ...[
-              /// Streaming button (kiri)
               _FloatingMenuButton(
-                bottom: 105,
-                left: MediaQuery.of(context).size.width / 2 - 85,
+                bottom: 108,
+                left: MediaQuery.of(context).size.width / 2 - 88,
                 icon: Icons.videocam_rounded,
                 label: 'Streaming',
-                color: Color(0xFF7DC953),
-                onTap: _openStreaming,
+                color: const Color(0xFF87D05F),
+                onTap: () => _openPage(const CameraInferenceScreen()),
               ),
-
-              /// Camera button (kanan)
               _FloatingMenuButton(
-                bottom: 105,
-                left: MediaQuery.of(context).size.width / 2 + 15,
+                bottom: 108,
+                left: MediaQuery.of(context).size.width / 2 + 18,
                 icon: Icons.camera_alt_rounded,
-                label: 'Camera',
-                color: Colors.orange.shade400,
-                onTap: _openCamera,
+                label: 'Kamera',
+                color: const Color(0xFFEF9651),
+                onTap: () => _openPage(CameraPage()),
               ),
             ],
 
-            /// 🔥 FLOATING CAMERA BUTTON (tengah navbar)
+            /// ── Floating camera button (center)
             Positioned(
-              bottom: 25,
-              left: MediaQuery.of(context).size.width / 2 - 35,
+              bottom: 26,
+              left: MediaQuery.of(context).size.width / 2 - 30,
               child: GestureDetector(
                 onTap: _toggleCameraMenu,
                 child: AnimatedContainer(
@@ -176,21 +161,28 @@ class _MainNavigationState extends State<MainNavigation> {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: _showCameraMenu
-                        ? Colors.green.shade800
-                        : Colors.green,
-                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: _showCameraMenu
+                          ? [const Color(0xFF18230F), const Color(0xFF246A40)]
+                          : [const Color(0xFF246A40), const Color(0xFF41B06E)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.green.withOpacity(0.5),
-                        blurRadius: 12,
+                        color: const Color(0xFF41B06E).withOpacity(0.45),
+                        blurRadius: 14,
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
                   child: Icon(
-                    _showCameraMenu ? Icons.close_rounded : Icons.camera_alt,
+                    _showCameraMenu
+                        ? Icons.close_rounded
+                        : Icons.camera_alt_rounded,
                     color: Colors.white,
-                    size: 30,
+                    size: 28,
                   ),
                 ),
               ),
@@ -202,7 +194,7 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 }
 
-/// Widget tombol floating menu (Streaming / Camera)
+// ─── FLOATING MENU BUTTON ──────────────────────────────────────────────────────
 class _FloatingMenuButton extends StatelessWidget {
   final double bottom;
   final double left;
@@ -231,20 +223,20 @@ class _FloatingMenuButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 65,
-              height: 65,
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
                 color: color,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: color.withOpacity(0.5),
-                    blurRadius: 12,
+                    color: color.withOpacity(0.45),
+                    blurRadius: 14,
                     offset: const Offset(0, 4),
                   ),
                 ],
               ),
-              child: Icon(icon, color: Colors.white, size: 30),
+              child: Icon(icon, color: Colors.white, size: 26),
             ),
             const SizedBox(height: 6),
             Text(
