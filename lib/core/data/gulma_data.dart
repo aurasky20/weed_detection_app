@@ -54,7 +54,7 @@ class GulmaData {
       Weed(
         name: "Alternanthera Sessilis",
         image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Alternanthera_sessilis_kqjvqz.jpg",
+            "https://res.cloudinary.com/df2k8l02r/image/upload/v1782363646/Alternanthera_Sessilis_yvruap.jpg",
         desc:
             "Alternanthera Sessilis adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Alternanthera Sessilis dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
         herbiside:
@@ -63,7 +63,7 @@ class GulmaData {
       Weed(
         name: "Commelina Diffusa",
         image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Commelina_Diffusa_fvqjvq.jpg",
+            "https://res.cloudinary.com/df2k8l02r/image/upload/v1782363647/Commelina_Diffusa_qn4gii.jpg",
         desc:
             "Commelina Diffusa adalah gulma yang memiliki daun lebar dan bunga berwarna biru. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Commelina Diffusa dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
         herbiside:
@@ -72,7 +72,7 @@ class GulmaData {
       Weed(
         name: "Ludwigia Octovalvis",
         image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Ludwigia_octovalvis_kasfa0.jpg",
+            "https://res.cloudinary.com/df2k8l02r/image/upload/v1782363647/Ludwigia_Octovalvis_dfz5ty.jpg",
         desc:
             "Ludwigia Octovalvis adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Ludwigia Octovalvis dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
         herbiside:
@@ -81,108 +81,9 @@ class GulmaData {
       Weed(
         name: "Mimosa Pudica",
         image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Mimosa_Pudica_qlh7s0.jpg",
+            "https://res.cloudinary.com/df2k8l02r/image/upload/v1782363647/Mimosa_Pudica_mz6xvj.jpg",
         desc:
             "Mimosa Pudica adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Mimosa Pudica dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Portulaca Oleracea",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Portulaca_oleracea_qlh7s0.jpg",
-        desc:
-            "Portulaca Oleracea adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Portulaca Oleracea dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Borreria Laevis",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Borreria_laevis_qlh7s0.jpg",
-        desc:
-            "Borreria Laevis adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Borreria Laevis dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Cleome Rutidospermae",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Cleome_rutidospermae_qlh7s0.jpg",
-        desc:
-            "Cleome Rutidospermae adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Cleome rutidospermae dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Capsicum Frutescent",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Capsicum_frutescent_qlh7s0.jpg",
-        desc:
-            "Capsicum Frutescent adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Capsicum frutescent dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Brassica campestris",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Brassica_campestris_qlh7s0.jpg",
-        desc:
-            "Brassica campestris adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Brassica campestris dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Physalis Angulata",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Physalis_angulata_qlh7s0.jpg",
-        desc:
-            "Physalis Angulata adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Physalis angulata dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Mikania Micrantha",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Mikania_micrantha_qlh7s0.jpg",
-        desc:
-            "Mikania Micrantha adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Mikania micrantha dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Sphagneticola Trilobata",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Sphagneticola_trilobata_qlh7s0.jpg",
-        desc:
-            "Sphagneticola Trilobata adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Sphagneticola trilobata dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Crassocephalum Crepidioides",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Crassocephalum_crepidioides_qlh7s0.jpg",
-        desc:
-            "Crassocephalum Crepidioides adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Crassocephalum crepidioides dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Sonchus Oleraceus",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Sonchus_oleraceus_qlh7s0.jpg",
-        desc:
-            "Sonchus Oleraceus adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Sonchus oleraceus dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
-        herbiside:
-            "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
-      ),
-      Weed(
-        name: "Cuphea Carthagenesis",
-        image:
-            "https://res.cloudinary.com/df2k8l02r/image/upload/q_auto/f_auto/v1776860404/Cuphea_carthagenesis_qlh7s0.jpg",
-        desc:
-            "Cuphea Carthagenesis adalah gulma yang memiliki daun lebar dan batang yang merayap. Gulma ini sering ditemukan di lahan pertanian, kebun, dan area terbuka lainnya. Cuphea carthagenesis dapat tumbuh dengan cepat dan menyebar melalui biji, sehingga dapat menjadi masalah serius jika tidak dikendalikan.",
         herbiside:
             "Herbisida berbasis glifosat atau herbisida selektif yang mengandung bahan aktif seperti atrazin atau metribuzin.",
       ),

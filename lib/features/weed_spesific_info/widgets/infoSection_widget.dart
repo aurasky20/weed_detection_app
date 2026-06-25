@@ -22,7 +22,7 @@ class InfoSection extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: accentColor.withOpacity(0.1),
@@ -42,11 +42,11 @@ class InfoSection extends StatelessWidget {
         children: [
           /// Card Header
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: iconBg,
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(17),
+                top: Radius.circular(12),
               ),
             ),
             child: Row(
@@ -56,7 +56,7 @@ class InfoSection extends StatelessWidget {
                   height: 34,
                   decoration: BoxDecoration(
                     color: iconColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(icon, color: iconColor, size: 18),
                 ),

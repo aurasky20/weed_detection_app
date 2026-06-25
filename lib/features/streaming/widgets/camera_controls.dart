@@ -15,8 +15,8 @@ class CameraControls extends StatelessWidget {
     required this.onCameraFlipped,
     required this.isLandscape,
     required this.maxItemKey,
-    required this.confidenceKey,
-    required this.iouKey,
+    // required this.confidenceKey,
+    // required this.iouKey,
     required this.flipKey,
   });
 
@@ -28,8 +28,8 @@ class CameraControls extends StatelessWidget {
   final VoidCallback onCameraFlipped;
   final bool isLandscape;
   final GlobalKey maxItemKey;
-  final GlobalKey confidenceKey;
-  final GlobalKey iouKey;
+  // final GlobalKey confidenceKey;
+  // final GlobalKey iouKey;
   final GlobalKey flipKey;
 
   @override
@@ -53,28 +53,28 @@ class CameraControls extends StatelessWidget {
                   onPressed: () => onSliderToggled(SliderType.numItems),
                 ),
               ),
-              SizedBox(height: isLandscape ? 8 : 12),
-              StreamingTutorial.tutorial(
-                key: confidenceKey,
-                title: "Confidence Threshold",
-                description:
-                    "Adjust the confidence threshold to filter out low-confidence detections. Higher values show fewer but more reliable detections.",
-                child: ControlButton.icon(
-                  icon: Icons.adjust,
-                  onPressed: () => onSliderToggled(SliderType.confidence),
-                ),
-              ),
-              SizedBox(height: isLandscape ? 8 : 12),
-              StreamingTutorial.tutorial(
-                key: iouKey,
-                title: "IoU Threshold",
-                description:
-                    "Controls how overlapping bounding boxes are filtered. When the threshold is set low, fewer overlapping boxes are displayed. When set high, more overlapping boxes may be shown.",
-                child: ControlButton.asset(
-                  assetPath: 'assets/iou.png',
-                  onPressed: () => onSliderToggled(SliderType.iou),
-                ),
-              ),
+              // SizedBox(height: isLandscape ? 8 : 12),
+              // StreamingTutorial.tutorial(
+              //   key: confidenceKey,
+              //   title: "Confidence Threshold",
+              //   description:
+              //       "Adjust the confidence threshold to filter out low-confidence detections. Higher values show fewer but more reliable detections.",
+              //   child: ControlButton.icon(
+              //     icon: Icons.adjust,
+              //     onPressed: () => onSliderToggled(SliderType.confidence),
+              //   ),
+              // ),
+              // SizedBox(height: isLandscape ? 8 : 12),
+              // StreamingTutorial.tutorial(
+              //   key: iouKey,
+              //   title: "IoU Threshold",
+              //   description:
+              //       "Controls how overlapping bounding boxes are filtered. When the threshold is set low, fewer overlapping boxes are displayed. When set high, more overlapping boxes may be shown.",
+              //   child: ControlButton.asset(
+              //     assetPath: 'assets/iou.png',
+              //     onPressed: () => onSliderToggled(SliderType.iou),
+              //   ),
+              // ),
               SizedBox(height: isLandscape ? 16 : 50),
             ],
           ),

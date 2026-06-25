@@ -45,12 +45,12 @@ class QuickInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _QuickChip(
-          icon: Icons.warning_amber_rounded,
-          label: "Berbahaya",
-          color: const Color(0xFFEF9651),
-        ),
-        const SizedBox(width: 8),
+        // _QuickChip(
+        //   icon: Icons.warning_amber_rounded,
+        //   label: "Berbahaya",
+        //   color: const Color(0xFFEF9651),
+        // ),
+        // const SizedBox(width: 8),
         _QuickChip(
           icon: Icons.agriculture_rounded,
           label: "Lahan Sawah",

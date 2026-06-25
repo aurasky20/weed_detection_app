@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/other_info/infosub_page.dart';
+import 'package:weedcheck/features/other_info/widget/version_footer_widget.dart';
 
 class GuidePage extends StatelessWidget {
   const GuidePage({super.key});
@@ -89,6 +90,7 @@ class GuidePage extends StatelessWidget {
           const SizedBox(height: 20),
 
           ..._steps.map((s) => _StepTile(step: s)).toList(),
+          const VersionFooter(),
         ],
       ),
     );

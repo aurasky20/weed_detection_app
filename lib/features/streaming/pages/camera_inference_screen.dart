@@ -144,8 +144,8 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
                               onCameraFlipped: _controller.flipCamera,
                               isLandscape: isLandscape,
                               maxItemKey: maxItemKey,
-                              confidenceKey: confidenceKey,
-                              iouKey: iouKey,
+                              // confidenceKey: confidenceKey,
+                              // iouKey: iouKey,
                               flipKey: flipKey,
                             ),
                             ThresholdSlider(

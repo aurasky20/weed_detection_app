@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/other_info/infosub_page.dart';
+import 'package:weedcheck/features/other_info/widget/version_footer_widget.dart';
 
 class LegalDisclaimerPage extends StatelessWidget {
   const LegalDisclaimerPage({super.key});
@@ -8,6 +9,7 @@ class LegalDisclaimerPage extends StatelessWidget {
   static const List<_Package> _packages = [
     _Package(name: 'flutter', license: 'BSD-3-Clause'),
     _Package(name: 'tflite_flutter', license: 'Apache 2.0'),
+    _Package(name: 'ultralitics_yolo', license: 'MIT'),
   ];
 
   @override
@@ -17,37 +19,6 @@ class LegalDisclaimerPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Badge
-          Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFEAF7F0),
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: const Color(0xFF41B06E).withOpacity(0.35),
-                ),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.gavel_rounded, color: Color(0xFF41B06E), size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    "Dokumen Legal",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF41B06E),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
           /// Container berbentuk surat resmi
           Container(
             padding: const EdgeInsets.all(20),
@@ -68,27 +39,22 @@ class LegalDisclaimerPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "SYARAT PENGGUNAAN & PENAFIAN",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF18230F),
+                Center(
+                  child: const Text(
+                    "SYARAT & KETENTUAN PENGGUNAAN APLIKASI",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF18230F),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  "WeedCheck Versi 1.0.0\nCopyright © 2026 Aura Sasi Kirana Dharma Acintya.\nSemua Hak Dilindungi Undang-Undang.",
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF18230F).withOpacity(0.7),
-                    height: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 16),
+
+                // const SizedBox(height: 16),
                 const Divider(color: Color(0xFFEAF7F0), thickness: 1.5),
-                const SizedBox(height: 16),
+                
+                const SizedBox(height: 8),
                 Text(
                   "Mohon membaca ketentuan ini dengan saksama sebelum menggunakan aplikasi WeedCheck:",
                   style: TextStyle(
@@ -98,7 +64,7 @@ class LegalDisclaimerPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 /// Poin-poin bernomor
                 const _NumberedParagraph(
                   number: "1.",
@@ -124,6 +90,20 @@ class LegalDisclaimerPage extends StatelessWidget {
                   content:
                       "Seluruh kode sumber, dataset yang dikumpulkan, dan arsitektur model yang disesuaikan adalah karya orisinal. Dilarang keras menyalin, mendistribusikan, atau merekayasa balik (reverse engineering) tanpa izin tertulis dari pengembang.",
                 ),
+
+                const Divider(color: Color(0xFFEAF7F0), thickness: 1.5),
+                const SizedBox(height: 12),
+                Text(
+                  "Copyright © 2026 Aura Sasi Kirana Dharma Acintya.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 11,
+                    // fontWeight: FontWeight.w600,
+                    color: const Color(0xFF18230F).withOpacity(0.7),
+                    height: 1.5,
+                  ),
+                ),
+                
               ],
             ),
           ),
@@ -134,6 +114,7 @@ class LegalDisclaimerPage extends StatelessWidget {
           const _SectionLabel(label: "Paket Open Source yang Digunakan"),
           const SizedBox(height: 10),
           ..._packages.map((p) => _PackageTile(pkg: p)),
+          const VersionFooter(),
         ],
       ),
     );
@@ -176,7 +157,8 @@ class _NumberedParagraph extends StatelessWidget {
                   fontSize: 13,
                   color: const Color(0xFF18230F).withOpacity(0.8),
                   height: 1.6,
-                  fontFamily: 'Roboto', // Sesuaikan dengan font utama aplikasi Anda
+                  fontFamily:
+                      'Roboto', // Sesuaikan dengan font utama aplikasi Anda
                 ),
                 children: [
                   TextSpan(
@@ -215,14 +197,15 @@ class _PackageTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: const Color(0xFF41B06E).withOpacity(0.12),
-        ),
+        border: Border.all(color: const Color(0xFF41B06E).withOpacity(0.12)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.inventory_2_rounded,
-              color: Color(0xFF41B06E), size: 15),
+          const Icon(
+            Icons.inventory_2_rounded,
+            color: Color(0xFF41B06E),
+            size: 15,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
@@ -235,8 +218,7 @@ class _PackageTile extends StatelessWidget {
             ),
           ),
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               color: const Color(0xFFEAF7F0),
               borderRadius: BorderRadius.circular(8),
@@ -262,13 +244,15 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.w700,
-        color: const Color(0xFF18230F).withOpacity(0.45),
-        letterSpacing: 0.4,
+    return Center(
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: const Color(0xFF18230F).withOpacity(0.45),
+          letterSpacing: 0.4,
+        ),
       ),
     );
   }

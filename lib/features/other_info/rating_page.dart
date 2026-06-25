@@ -51,8 +51,7 @@ class _RatingPageState extends State<RatingPage> {
         ? 'Anonim'
         : _nameController.text.trim();
 
-    final subject =
-        Uri.encodeComponent('Rating WeedCheck: $_rating/5 $stars');
+    final subject = Uri.encodeComponent('Rating WeedCheck: $_rating/5 $stars');
     final body = Uri.encodeComponent(
       'Nama   : $name\n'
       'Email  : $email\n'
@@ -61,9 +60,7 @@ class _RatingPageState extends State<RatingPage> {
       '--- Dikirim dari WeedCheck App ---',
     );
 
-    final uri = Uri.parse(
-      'mailto:$_targetEmail?subject=$subject&body=$body',
-    );
+    final uri = Uri.parse('mailto:$_targetEmail?subject=$subject&body=$body');
 
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
@@ -83,15 +80,16 @@ class _RatingPageState extends State<RatingPage> {
         content: Text(
           msg,
           style: const TextStyle(
-              color: Colors.white,
-              fontSize: 13,
-              fontWeight: FontWeight.w500),
+            color: Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        backgroundColor:
-            isError ? const Color(0xFFEF9651) : const Color(0xFF18230F),
+        backgroundColor: isError
+            ? const Color(0xFFEF9651)
+            : const Color(0xFF18230F),
         behavior: SnackBarBehavior.floating,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       ),
     );
@@ -120,7 +118,8 @@ class _RatingPageState extends State<RatingPage> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                  color: const Color(0xFF41B06E).withOpacity(0.12)),
+                color: const Color(0xFF41B06E).withOpacity(0.12),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF41B06E).withOpacity(0.07),
@@ -151,8 +150,7 @@ class _RatingPageState extends State<RatingPage> {
                     return GestureDetector(
                       onTap: () => setState(() => _rating = i + 1),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
                         child: Icon(
                           active
                               ? Icons.star_rounded
@@ -201,8 +199,7 @@ class _RatingPageState extends State<RatingPage> {
           InputField(
             controller: _messageController,
             label: "Pesan & Masukan",
-            hint:
-                "Tulis pengalaman atau saran Anda untuk WeedCheck...",
+            hint: "Tulis pengalaman atau saran Anda untuk WeedCheck...",
             icon: Icons.edit_note_rounded,
             keyboardType: TextInputType.multiline,
             maxLines: 5,
@@ -210,35 +207,6 @@ class _RatingPageState extends State<RatingPage> {
           ),
 
           const SizedBox(height: 20),
-
-          /// ── Destination info chip
-          Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0FAF4),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                  color: const Color(0xFF87D05F).withOpacity(0.3)),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.send_rounded,
-                    color: Color(0xFF41B06E), size: 14),
-                const SizedBox(width: 8),
-                Text(
-                  "Dikirim ke: Tim Pengembang Aplikasi",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: const Color(0xFF18230F).withOpacity(0.55),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 14),
 
           /// ── Send button
           GestureDetector(
@@ -251,10 +219,7 @@ class _RatingPageState extends State<RatingPage> {
                 gradient: LinearGradient(
                   colors: _sending
                       ? [const Color(0xFF41B06E), const Color(0xFF41B06E)]
-                      : [
-                          const Color(0xFF246A40),
-                          const Color(0xFF41B06E)
-                        ],
+                      : [const Color(0xFF246A40), const Color(0xFF41B06E)],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
@@ -280,8 +245,11 @@ class _RatingPageState extends State<RatingPage> {
                     : const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.send_rounded,
-                              color: Color(0xFFFFDD34), size: 18),
+                          Icon(
+                            Icons.send_rounded,
+                            color: Color(0xFFFFDD34),
+                            size: 18,
+                          ),
                           SizedBox(width: 8),
                           Text(
                             "Kirim via Email",
@@ -293,18 +261,6 @@ class _RatingPageState extends State<RatingPage> {
                           ),
                         ],
                       ),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          Center(
-            child: Text(
-              "Akan membuka aplikasi email di perangkat Anda",
-              style: TextStyle(
-                fontSize: 11,
-                color: const Color(0xFF18230F).withOpacity(0.35),
               ),
             ),
           ),
@@ -330,4 +286,3 @@ class _RatingPageState extends State<RatingPage> {
     }
   }
 }
-

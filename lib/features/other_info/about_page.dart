@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/other_info/infosub_page.dart';
+import 'package:weedcheck/features/other_info/widget/version_footer_widget.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -33,8 +34,11 @@ class AboutPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Icon(Icons.eco_rounded,
-                      color: Color(0xFFFFDD34), size: 40),
+                  child: const Icon(
+                    Icons.eco_rounded,
+                    color: Color(0xFFFFDD34),
+                    size: 40,
+                  ),
                 ),
                 const SizedBox(height: 14),
                 const Text(
@@ -58,6 +62,15 @@ class AboutPage extends StatelessWidget {
           ),
 
           const SizedBox(height: 28),
+
+          _InfoCard(
+            icon: Icons.grass_rounded,
+            title: "Apa itu Gulma?",
+            content:
+                "Gulma merupakan tanaman pengganggu yang tumbuh di lahan pertanian dan dapat menurunkan produktivitas tanaman budidaya. Gulma bersaing dengan tanaman utama dalam memperoleh sinar matahari, air, unsur hara, serta ruang tumbuh. Selain itu, gulma mampu tumbuh dan berkembang secara alami tanpa sengaja ditanam, sehingga populasinya dapat meningkat dengan cepat. Oleh karena itu, keberadaan gulma perlu dikendalikan agar tidak menghambat pertumbuhan tanaman dan mengurangi hasil panen.",
+          ),
+
+          const SizedBox(height: 12),
 
           _InfoCard(
             icon: Icons.flag_rounded,
@@ -96,32 +109,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 24),
 
           /// Version info row
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0FAF4),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                  color: const Color(0xFF87D05F).withOpacity(0.3)),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.info_outline_rounded,
-                    color: const Color(0xFF41B06E).withOpacity(0.7), size: 16),
-                const SizedBox(width: 10),
-                const Expanded(
-                  child: Text(
-                    "Versi 1.0.0 · Build 2025",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF41B06E),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const VersionFooter(),
         ],
       ),
     );
@@ -146,8 +134,7 @@ class _InfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border:
-            Border.all(color: const Color(0xFF41B06E).withOpacity(0.12)),
+        border: Border.all(color: const Color(0xFF41B06E).withOpacity(0.12)),
         boxShadow: [
           BoxShadow(
             color: const Color(0xFF41B06E).withOpacity(0.07),
