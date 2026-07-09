@@ -19,10 +19,10 @@ class StreamingTopBar extends StatelessWidget {
     required this.infoKey,
     required this.flashKey,
   });
-  
 
   @override
   Widget build(BuildContext context) {
+    print("StreamingTopBar rebuild : $isFlashOn");
     return Container(
       color: Colors.black,
       child: SafeArea(

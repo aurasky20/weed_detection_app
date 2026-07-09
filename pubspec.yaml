@@ -27,13 +27,22 @@ dependencies:
   ultralytics_yolo: ^0.3.4
   url_launcher: ^6.3.0
   flutter_launcher_icons: ^0.14.4
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
+  hive_generator:
+  build_runner:
+
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/logo.png"
 
 flutter:
   uses-material-design: true
@@ -41,6 +50,7 @@ flutter:
   assets:
   - assets/
   - assets/models/
+  - assets/icon/
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

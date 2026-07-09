@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:hive/hive.dart';
+import 'package:weedcheck/features/other_info/Model/data_rating.dart';
 import 'package:weedcheck/features/other_info/infosub_page.dart';
 import 'package:weedcheck/features/other_info/widget/input_text.dart';
 
@@ -11,67 +12,55 @@ class RatingPage extends StatefulWidget {
 }
 
 class _RatingPageState extends State<RatingPage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadRating();
+  }
+
   int _rating = 0;
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
   final _messageController = TextEditingController();
   bool _sending = false;
 
-  static const _targetEmail = 'aurasasi20@gmail.com';
-
-  /// Basic email format check
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
-  }
-
-  Future<void> _send() async {
-    final email = _emailController.text.trim();
+  Future<void> _saveRating() async {
+    FocusScope.of(context).unfocus();
 
     if (_rating == 0) {
       _showSnackbar("Pilih rating terlebih dahulu", isError: true);
       return;
     }
-    if (email.isEmpty) {
-      _showSnackbar("Email tidak boleh kosong", isError: true);
-      return;
-    }
-    if (!_isValidEmail(email)) {
-      _showSnackbar("Format email tidak valid", isError: true);
-      return;
-    }
-    if (_messageController.text.trim().isEmpty) {
-      _showSnackbar("Pesan tidak boleh kosong", isError: true);
-      return;
-    }
 
-    setState(() => _sending = true);
+    final box = Hive.box<RatingModel>('ratings');
 
-    final stars = '⭐' * _rating;
-    final name = _nameController.text.trim().isEmpty
-        ? 'Anonim'
-        : _nameController.text.trim();
-
-    final subject = Uri.encodeComponent('Rating WeedCheck: $_rating/5 $stars');
-    final body = Uri.encodeComponent(
-      'Nama   : $name\n'
-      'Email  : $email\n'
-      'Rating : $_rating/5 $stars\n\n'
-      'Pesan:\n${_messageController.text.trim()}\n\n'
-      '--- Dikirim dari WeedCheck App ---',
+    await box.put(
+      'user_rating',
+      RatingModel(
+        rating: _rating,
+        message: _messageController.text.trim(),
+        createdAt: DateTime.now(),
+      ),
     );
 
-    final uri = Uri.parse('mailto:$_targetEmail?subject=$subject&body=$body');
+    _showSnackbar("Terima kasih atas masukannya!");
 
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-      if (!mounted) return;
-      _showSnackbar("Membuka aplikasi email...");
-    } else {
-      if (!mounted) return;
-      _showSnackbar("Tidak dapat membuka aplikasi email", isError: true);
+    Future.delayed(const Duration(milliseconds: 600), () {
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  Future<void> _loadRating() async {
+    final box = Hive.box<RatingModel>('ratings');
+
+    final ratingData = box.get('user_rating');
+
+    if (ratingData != null) {
+      setState(() {
+        _rating = ratingData.rating;
+        _messageController.text = ratingData.message;
+      });
     }
-
-    setState(() => _sending = false);
   }
 
   void _showSnackbar(String msg, {bool isError = false}) {
@@ -97,8 +86,6 @@ class _RatingPageState extends State<RatingPage> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
     _messageController.dispose();
     super.dispose();
   }
@@ -168,49 +155,24 @@ class _RatingPageState extends State<RatingPage> {
             ),
           ),
 
-          const SizedBox(height: 16),
-
-          /// ── Name field (optional)
-          InputField(
-            controller: _nameController,
-            label: "Nama (opsional)",
-            hint: "Masukkan nama Anda...",
-            icon: Icons.person_outline_rounded,
-            keyboardType: TextInputType.name,
-            maxLines: 1,
-          ),
-
-          const SizedBox(height: 12),
-
-          /// ── Email field (required)
-          InputField(
-            controller: _emailController,
-            label: "Email Anda",
-            hint: "contoh@email.com",
-            icon: Icons.email_outlined,
-            keyboardType: TextInputType.emailAddress,
-            maxLines: 1,
-            isRequired: true,
-          ),
-
-          const SizedBox(height: 12),
+          const SizedBox(height: 24),
 
           /// ── Message field (required)
           InputField(
             controller: _messageController,
-            label: "Pesan & Masukan",
-            hint: "Tulis pengalaman atau saran Anda untuk WeedCheck...",
+            label: "Pesan & Masukan (Opsional)",
+            hint: "Tuliskan pengalaman atau saran Anda (opsional)...",
             icon: Icons.edit_note_rounded,
             keyboardType: TextInputType.multiline,
             maxLines: 5,
-            isRequired: true,
+            isRequired: false,
           ),
 
           const SizedBox(height: 20),
 
           /// ── Send button
           GestureDetector(
-            onTap: _sending ? null : _send,
+            onTap: _saveRating,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: double.infinity,
@@ -252,7 +214,7 @@ class _RatingPageState extends State<RatingPage> {
                           ),
                           SizedBox(width: 8),
                           Text(
-                            "Kirim via Email",
+                            "Simpan Masukkan",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,

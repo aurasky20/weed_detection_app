@@ -93,7 +93,13 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
                   /// 🔝 TOP BAR — style sama dengan CameraPage
                   StreamingTopBar(
                     onBack: () => Navigator.pop(context),
-                    onFlashPressed: _controller.toggleFlash,
+                    onFlashPressed: () async {
+                      await _controller.toggleFlash();
+
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
                     isFlashOn: _controller.isFlashOn,
                     infoKey: infoKey,
                     flashKey: flashKey,
@@ -112,7 +118,7 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
                       );
                     },
                   ),
-              
+
                   /// 📸 CAMERA AREA
                   Expanded(
                     child: ListenableBuilder(
@@ -128,6 +134,8 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
                             WeedDetectionOverlay(
                               detections: _controller.lastDetections,
                             ),
+
+                            // BrightnessSlider(controller: _controller),
                             CameraInferenceOverlay(
                               controller: _controller,
                               isLandscape: isLandscape,
@@ -150,7 +158,8 @@ class _CameraInferenceScreenState extends State<CameraInferenceScreen> {
                             ),
                             ThresholdSlider(
                               activeSlider: _controller.activeSlider,
-                              confidenceThreshold: _controller.confidenceThreshold,
+                              confidenceThreshold:
+                                  _controller.confidenceThreshold,
                               iouThreshold: _controller.iouThreshold,
                               numItemsThreshold: _controller.numItemsThreshold,
                               onValueChanged: _controller.updateSliderValue,

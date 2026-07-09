@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weedcheck/features/other_info/infosub_page.dart';
+import 'package:weedcheck/features/other_info/widget/developer_card_widget.dart';
+import 'package:weedcheck/features/other_info/widget/info_card_widget.dart';
 import 'package:weedcheck/features/other_info/widget/version_footer_widget.dart';
 
 class AboutPage extends StatelessWidget {
@@ -63,34 +65,34 @@ class AboutPage extends StatelessWidget {
 
           const SizedBox(height: 28),
 
-          _InfoCard(
+          InfoCard(
             icon: Icons.grass_rounded,
             title: "Apa itu Gulma?",
             content:
                 "Gulma merupakan tanaman pengganggu yang tumbuh di lahan pertanian dan dapat menurunkan produktivitas tanaman budidaya. Gulma bersaing dengan tanaman utama dalam memperoleh sinar matahari, air, unsur hara, serta ruang tumbuh. Selain itu, gulma mampu tumbuh dan berkembang secara alami tanpa sengaja ditanam, sehingga populasinya dapat meningkat dengan cepat. Oleh karena itu, keberadaan gulma perlu dikendalikan agar tidak menghambat pertumbuhan tanaman dan mengurangi hasil panen.",
           ),
 
+          // const SizedBox(height: 12),
+
+          // InfoCard(
+          //   icon: Icons.flag_rounded,
+          //   title: "Tujuan Aplikasi",
+          //   content:
+          //       "WeedCheck hadir untuk membantu petani dan peneliti mengidentifikasi jenis gulma secara cepat dan akurat menggunakan teknologi kecerdasan buatan (AI) berbasis model YOLO.",
+          // ),
+
+          // const SizedBox(height: 12),
+
+          // InfoCard(
+          //   icon: Icons.psychology_rounded,
+          //   title: "Teknologi",
+          //   content:
+          //       "Aplikasi ini menggunakan model deteksi objek YOLOv8 yang dilatih pada dataset gulma lokal Indonesia, dijalankan secara offline di perangkat menggunakan TensorFlow Lite.",
+          // ),
+
           const SizedBox(height: 12),
 
-          _InfoCard(
-            icon: Icons.flag_rounded,
-            title: "Tujuan Aplikasi",
-            content:
-                "WeedCheck hadir untuk membantu petani dan peneliti mengidentifikasi jenis gulma secara cepat dan akurat menggunakan teknologi kecerdasan buatan (AI) berbasis model YOLO.",
-          ),
-
-          const SizedBox(height: 12),
-
-          _InfoCard(
-            icon: Icons.psychology_rounded,
-            title: "Teknologi",
-            content:
-                "Aplikasi ini menggunakan model deteksi objek YOLOv8 yang dilatih pada dataset gulma lokal Indonesia, dijalankan secara offline di perangkat menggunakan TensorFlow Lite.",
-          ),
-
-          const SizedBox(height: 12),
-
-          _InfoCard(
+          InfoCard(
             icon: Icons.grass_rounded,
             title: "Kategori Gulma",
             content:
@@ -99,84 +101,12 @@ class AboutPage extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          _InfoCard(
-            icon: Icons.people_rounded,
-            title: "Tim Pengembang",
-            content:
-                "Dikembangkan sebagai proyek penelitian untuk mendukung pertanian presisi di Indonesia.",
-          ),
+          const DeveloperInfoCard(),
 
           const SizedBox(height: 24),
 
           /// Version info row
           const VersionFooter(),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String content;
-
-  const _InfoCard({
-    required this.icon,
-    required this.title,
-    required this.content,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFF41B06E).withOpacity(0.12)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF41B06E).withOpacity(0.07),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEAF7F0),
-                  borderRadius: BorderRadius.circular(9),
-                ),
-                child: Icon(icon, color: const Color(0xFF41B06E), size: 16),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF18230F),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(
-            content,
-            style: TextStyle(
-              fontSize: 13,
-              color: const Color(0xFF18230F).withOpacity(0.65),
-              height: 1.6,
-            ),
-          ),
         ],
       ),
     );

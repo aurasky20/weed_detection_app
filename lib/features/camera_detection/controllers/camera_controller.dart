@@ -58,7 +58,7 @@ class CameraControllerX extends ChangeNotifier {
   Future<void> _setupCamera(CameraDescription camera) async {
     cameraController = CameraController(
       camera,
-      ResolutionPreset.medium, // was .high — this alone cuts lag significantly
+      ResolutionPreset.high, // was .medium — this alone cuts lag significantly
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.yuv420,
     );
@@ -81,7 +81,7 @@ class CameraControllerX extends ChangeNotifier {
 
     cameraController = CameraController(
       newCamera,
-      ResolutionPreset.medium,
+      ResolutionPreset.high,
       enableAudio: false,
     );
 

@@ -17,19 +17,30 @@ class CameraInferenceContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (controller.modelPath.isNotEmpty) {
-      return YOLOView(
-        key: ValueKey(
-          'yolo_view_${controller.modelPath}_${controller.selectedTask.name}_$rebuildKey',
-        ),
-        controller: controller.yoloController,
-        modelPath: controller.modelPath,
-        task: controller.selectedTask,
-        streamingConfig: const YOLOStreamingConfig.minimal(),
-        onResult: controller.onDetectionResults,
-        onPerformanceMetrics: (metrics) =>
-            controller.onPerformanceMetrics(metrics.fps),
-        lensFacing: controller.lensFacing,
-        showOverlays: false,
+      return Stack(
+        children: [
+          YOLOView(
+            key: ValueKey(
+              'yolo_view_${controller.modelPath}_${controller.selectedTask.name}_$rebuildKey',
+            ),
+            controller: controller.yoloController,
+            modelPath: controller.modelPath,
+            task: controller.selectedTask,
+            streamingConfig: const YOLOStreamingConfig.minimal(),
+            onResult: controller.onDetectionResults,
+            onPerformanceMetrics: (metrics) =>
+                controller.onPerformanceMetrics(metrics.fps),
+            lensFacing: controller.lensFacing,
+            showOverlays: false,
+          ),
+          IgnorePointer(
+            child: AnimatedOpacity(
+              opacity: 0.2,
+              duration: const Duration(milliseconds: 100),
+              child: Container(color: Colors.black),
+            ),
+          ),
+        ],
       );
     } else {
       return const Center(

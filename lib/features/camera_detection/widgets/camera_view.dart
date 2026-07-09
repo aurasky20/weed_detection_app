@@ -73,6 +73,47 @@ class _CameraViewState extends State<CameraView> {
                 ),
               ),
             ),
+
+            /// 🌞 BRIGHTNESS
+            Positioned(
+              right: 8,
+              top: 100,
+              bottom: 100,
+              child: Column(
+                children: [
+                  Icon(Icons.wb_sunny, color: Colors.orange),
+                  Expanded(
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: const Color(
+                            0xFFFFC107,
+                          ), // Amber 500
+                          inactiveTrackColor: Colors.white24,
+                          thumbColor: const Color(0xFFFFC107),
+                          overlayColor: const Color(0x33FFC107),
+                          trackHeight: 3,
+                          thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 8,
+                          ),
+                        ),
+                        child: Slider(
+                          value: widget.controller.currentExposure,
+                          min: widget.controller.minExposure,
+                          max: widget.controller.maxExposure,
+                          onChanged: (value) async {
+                            await widget.controller.setExposure(value);
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.nightlight_round, color: Colors.orange),
+                ],
+              ),
+            ),
           ],
         );
       },

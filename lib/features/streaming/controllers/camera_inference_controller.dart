@@ -53,6 +53,13 @@ class CameraInferenceController extends ChangeNotifier {
   int _frameCount = 0;
   DateTime _lastFpsUpdate = DateTime.now();
 
+  double _currentExposure = 0;
+  double _minExposure = -2;
+  double _maxExposure = 2;
+  double get currentExposure => _currentExposure;
+  double get minExposure => _minExposure;
+  double get maxExposure => _maxExposure;
+
   double _confidenceThreshold = 0.50;
   double _iouThreshold = 0.7;
   int _numItemsThreshold = 15;
@@ -92,9 +99,19 @@ class CameraInferenceController extends ChangeNotifier {
   LensFacing get lensFacing => _lensFacing;
   YOLOViewController get yoloController => _yoloController;
 
+  Future<void> setExposure(double value) async {
+    _currentExposure = value;
+    await _yoloController.setExposure(value);
+    notifyListeners();
+  }
+
   Future<void> toggleFlash() async {
     _isFlashOn = !_isFlashOn;
+
+    print("FLASH STATE = $_isFlashOn");
+
     await _yoloController.setTorchMode(_isFlashOn);
+
     notifyListeners();
   }
 
