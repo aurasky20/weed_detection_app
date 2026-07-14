@@ -20,15 +20,15 @@ class ResultCard extends StatelessWidget {
     if (isInvalidImage) {
       color = Colors.grey;
       icon = Icons.visibility_off;
-      statusText = "Weeds not found / Image too dark";
+      statusText = "Gambar terlalu gelap";
     } else if (detected) {
       color = const Color(0xFF41B06E);
       icon = Icons.check_circle;
-      statusText = "Weeds detected successfully";
+      statusText = "Berhasil mendeteksi gulma";
     } else {
       color = const Color(0xFFEF9651);
       icon = Icons.error_outline;
-      statusText = "Weeds not detected";
+      statusText = "Tidak terdeteksi Gulma";
     }
 
     return Container(
@@ -67,7 +67,7 @@ class ResultCard extends StatelessWidget {
 
           /// Label
           Text(
-            "Detection Result",
+            "Hasil Deteksi",
             style: TextStyle(
               fontSize: 12,
               color: const Color(0xFF18230F).withOpacity(0.45),
@@ -78,7 +78,7 @@ class ResultCard extends StatelessWidget {
 
           /// RESULT TEXT
           Text(
-            result.isNotEmpty ? result : "Weed not identified",
+            result.isNotEmpty ? result : "Tidak terdeteksi Gulma",
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 22,

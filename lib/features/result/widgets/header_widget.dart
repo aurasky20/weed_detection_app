@@ -30,7 +30,7 @@ class ResultHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: const Center(
               child: Text(
-                "Detection Result",
+                "Hasil Deteksi",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,

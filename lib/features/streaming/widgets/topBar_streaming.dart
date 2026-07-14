@@ -35,7 +35,7 @@ class StreamingTopBar extends StatelessWidget {
                 key: infoKey,
                 title: "Tutorial",
                 description:
-                    "Tap this button anytime to view the streaming tutorial again.",
+                    "Tap tombol ini kapan pun Anda ingin melihat tutorial streaming kamera lagi.",
                 child: IconButton(
                   onPressed: onShowTutorial,
                   icon: const Icon(Icons.info_outline, color: Colors.white),
@@ -57,9 +57,9 @@ class StreamingTopBar extends StatelessWidget {
 
               StreamingTutorial.tutorial(
                 key: flashKey,
-                title: "Flash",
+                title: "Senter",
                 description:
-                    "Turn on the flashlight when the environment is dark to improve object visibility and detection quality.",
+                    "Nyalakan senter ketika lingkungan gelap untuk meningkatkan visibilitas objek dan kualitas deteksi.",
                 child: IconButton(
                   onPressed: onFlashPressed,
                   icon: Icon(

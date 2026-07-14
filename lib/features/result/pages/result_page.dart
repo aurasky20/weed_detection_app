@@ -11,12 +11,16 @@ class ResultPage extends StatelessWidget {
 
   const ResultPage({super.key, required this.result, required this.imagePath});
 
-  bool get _detected =>
-      result.isNotEmpty &&
-      !result.toLowerCase().contains("tidak") &&
-      !result.toLowerCase().contains("unknown") &&
-      !result.toLowerCase().contains("not") &&
-      !result.toLowerCase().contains("too dark");
+  bool get _detected {
+    final text = result.toLowerCase();
+
+    return text.isNotEmpty &&
+        !text.contains("tidak") &&
+        !text.contains("unknown") &&
+        !text.contains("not") &&
+        !text.contains("gelap") &&
+        !text.contains("too dark");
+  }
 
   @override
   Widget build(BuildContext context) {

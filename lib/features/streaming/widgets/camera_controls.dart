@@ -45,9 +45,9 @@ class CameraControls extends StatelessWidget {
             children: [
               StreamingTutorial.tutorial(
                 key: maxItemKey,
-                title: "Maximum Items Detected",
+                title: "Maksimum Gulma Terdeteksi",
                 description:
-                    "Sets the maximum number of weed objects displayed on the screen. If you can't see the labels, try reducing this number.",
+                    "Mengatur jumlah maksimum gulma yang ditampilkan pada layar. Jika Anda tidak dapat melihat label, coba kurangi angka ini.",
                 child: ControlButton.icon(
                   icon: Icons.layers,
                   onPressed: () => onSliderToggled(SliderType.numItems),
@@ -82,9 +82,9 @@ class CameraControls extends StatelessWidget {
 
         StreamingTutorial.tutorial(
           key: flipKey,
-          title: "Switch Camera",
+          title: "Flip Kamera",
           description:
-              "Tap this button to switch between the front and rear cameras.",
+              "Gunakan tombol ini untuk beralih antara kamera depan dan belakang. Kamera belakang biasanya lebih baik untuk mendeteksi gulma.",
           child: Positioned(
             bottom:
                 MediaQuery.of(context).padding.top +

@@ -21,12 +21,16 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
   bool _loading = false;
 
   // Cek apakah hasil deteksi valid (terdeteksi gulma)
-  bool get _canSave =>
-      widget.result.isNotEmpty &&
-      !widget.result.toLowerCase().contains('tidak') &&
-      !widget.result.toLowerCase().contains('unknown') &&
-      !widget.result.toLowerCase().contains('not') &&
-      !widget.result.toLowerCase().contains('too dark');
+  bool get _canSave {
+  final result = widget.result.toLowerCase();
+
+  return result.isNotEmpty &&
+      !result.contains('tidak') &&
+      !result.contains('unknown') &&
+      !result.contains('not') &&
+      !result.contains('too dark') &&
+      !result.contains('gelap');
+}
 
   Future<void> _onTap() async {
     if (_saved || _loading || !_canSave) return;
@@ -66,7 +70,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
             ),
             const SizedBox(width: 8),
             Text(
-              success ? 'Saved to history' : 'Failed to save',
+              success ? 'Berhasil disimpan ke riwayat' : 'Gagal menyimpan ke riwayat',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -102,7 +106,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
             Icon(Icons.bookmark, color: Color(0xFFBBBBBB), size: 18),
             SizedBox(width: 8),
             Text(
-              'Cannot Be Saved',
+              'Tidak Dapat Disimpan',
               style: TextStyle(
                 color: Color(0xFFBBBBBB),
                 fontSize: 14,
@@ -150,7 +154,7 @@ class _SaveHistoryButtonState extends State<SaveHistoryButton> {
                   ),
             const SizedBox(width: 8),
             Text(
-              _saved ? 'Saved' : 'Save to History',
+              _saved ? 'Berhasil disimpan' : 'Simpan ke Riwayat',
               style: const TextStyle(
                 color: Color(0xFF41B06E),
                 fontSize: 14,

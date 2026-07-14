@@ -93,10 +93,7 @@ class InfoHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF246A40),
-            Color(0xFF41B06E),
-          ],
+          colors: [Color(0xFF246A40), Color(0xFF41B06E)],
         ),
         boxShadow: [
           BoxShadow(
@@ -109,10 +106,7 @@ class InfoHeader extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 14,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           child: Row(
             children: [
               /// Logo
@@ -127,10 +121,12 @@ class InfoHeader extends StatelessWidget {
                     width: 1.5,
                   ),
                 ),
-                child: const Icon(
-                  Icons.eco_rounded,
-                  color: Color(0xFFFFDD34),
-                  size: 22,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image(
+                    image: const AssetImage('assets/icon/logo.png'),
+                    height: 100,
+                  ),
                 ),
               ),
 

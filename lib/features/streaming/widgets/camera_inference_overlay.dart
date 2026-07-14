@@ -64,7 +64,7 @@ class CameraInferenceOverlay extends StatelessWidget {
         label: 'IOU THRESHOLD: ${controller.iouThreshold.toStringAsFixed(2)}',
       );
     } else if (controller.activeSlider == SliderType.numItems) {
-      return ThresholdPill(label: 'ITEMS MAX: ${controller.numItemsThreshold}');
+      return ThresholdPill(label: 'Maksimum Gulma Terdeteksi: ${controller.numItemsThreshold}');
     }
     return const SizedBox.shrink();
   }

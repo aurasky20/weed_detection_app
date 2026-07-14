@@ -24,11 +24,11 @@ class DetectionStatsDisplay extends StatelessWidget {
         children: [
           StreamingTutorial.tutorial(
             key: detectionKey,
-            title: "Detection Count",
+            title: "Jumlah Deteksi",
             description:
-                "Shows the total number of weeds currently detected by the model.",
+                "Menampilkan jumlah gulma yang terdeteksi pada layar. Jika Anda tidak dapat melihat label, coba kurangi jumlah maksimum item yang ditampilkan.",
             child: Text(
-              'DETECTIONS: $detectionCount',
+              'Gulma Terdeteksi: $detectionCount',
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -42,12 +42,12 @@ class DetectionStatsDisplay extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 50),
           StreamingTutorial.tutorial(
             key: fpsKey,
-            title: "FPS",
+            title: "Frame Per Second (FPS)",
             description:
-                "Displays the processing speed in Frames Per Second. Higher FPS means smoother real-time detection.",
+                "Menampilkan kecepatan pemrosesan dalam Frames Per Second. FPS yang lebih tinggi berarti deteksi real-time yang lebih halus.",
             child: Text(
               'FPS: ${currentFps.toStringAsFixed(1)}',
               style: const TextStyle(

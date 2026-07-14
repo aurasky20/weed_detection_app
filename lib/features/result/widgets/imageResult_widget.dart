@@ -39,7 +39,7 @@ class _ImagePlaceholder extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              "Image not available",
+              "Gambar tidak valid",
               style: TextStyle(
                 color: const Color(0xFF18230F).withOpacity(0.4),
                 fontSize: 13,

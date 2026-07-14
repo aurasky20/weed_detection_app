@@ -46,10 +46,12 @@ class HomeHeader extends StatelessWidget {
                       width: 1.5,
                     ),
                   ),
-                  child: const Icon(
-                    Icons.eco_rounded,
-                    color: Color(0xFFFFDD34),
-                    size: 22,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image(
+                      image: const AssetImage('assets/icon/logo.png'),
+                      height: 100,
+                    ),
                   ),
                 ),
 

@@ -150,7 +150,7 @@ class CameraControllerX extends ChangeNotifier {
     if (image == null) return "Failed to read image";
 
     if (_isImageTooDark(image)) {
-      return "Image is too dark, please find a brighter location";
+      return "Gambar terlalu gelap. Nyalakan senter atau cari pencahayaan yang lebih baik.";
     }
 
     final tflite = TFLiteService();

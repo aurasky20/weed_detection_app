@@ -1,3 +1,3 @@
 class Labels {
-  static const labels = ["Broadleaf", "Narrowleaf", "Sadge", "Not Weed"];
+  static const labels = ["Gulma Berdaun Lebar", "Gulma Berdaun Sempit", "Gulma Teki-tekian", "Bukan Gulma"];
 }

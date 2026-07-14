@@ -50,7 +50,7 @@ class SaveDialog extends StatelessWidget {
 
               /// TITLE
               const Text(
-                "Save to History",
+                "Simpan ke Riwayat",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
@@ -62,7 +62,7 @@ class SaveDialog extends StatelessWidget {
 
               /// MESSAGE
               Text(
-                'Save result "$result" to history?',
+                'Simpan hasil "$result" ke riwayat?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 13,
@@ -90,7 +90,7 @@ class SaveDialog extends StatelessWidget {
                         ),
                         child: const Center(
                           child: Text(
-                            "Cancel",
+                            "Batal",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF41B06E),
@@ -115,7 +115,7 @@ class SaveDialog extends StatelessWidget {
                         ),
                         child: const Center(
                           child: Text(
-                            "Save",
+                            "Simpan",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.white,

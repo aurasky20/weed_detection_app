@@ -74,6 +74,68 @@ class _CameraViewState extends State<CameraView> {
               ),
             ),
 
+            /// 🌿 GUIDE FRAME (arahkan kamera ke gulma)
+            IgnorePointer(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 40,
+                ),
+                child: Stack(
+                  children: [
+                    // Sudut kiri atas
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: _CornerBracket(alignment: Alignment.topLeft),
+                    ),
+                    // Sudut kanan atas
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: _CornerBracket(alignment: Alignment.topRight),
+                    ),
+                    // Sudut kiri bawah
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: _CornerBracket(alignment: Alignment.bottomLeft),
+                    ),
+                    // Sudut kanan bawah
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: _CornerBracket(alignment: Alignment.bottomRight),
+                    ),
+
+                    // Ikon & teks panduan di tengah
+                    Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.eco_outlined,
+                            color: Colors.white.withOpacity(0.4),
+                            size: 48,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "Ambil gambar Gulma",
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.4),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             /// 🌞 BRIGHTNESS
             Positioned(
               right: 8,
@@ -118,5 +180,41 @@ class _CameraViewState extends State<CameraView> {
         );
       },
     );
+  }
+}
+
+/// Widget kecil untuk menggambar sudut bingkai tipis (bracket corner)
+class _CornerBracket extends StatelessWidget {
+  final Alignment alignment;
+  final double size;
+  final double thickness;
+  final Color color;
+
+  const _CornerBracket({
+    required this.alignment,
+    this.size = 28,
+    this.thickness = 2.5,
+    this.color = Colors.white,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final borderSide = BorderSide(
+      color: color.withOpacity(0.5),
+      width: thickness,
+    );
+
+    Border border;
+    if (alignment == Alignment.topLeft) {
+      border = Border(top: borderSide, left: borderSide);
+    } else if (alignment == Alignment.topRight) {
+      border = Border(top: borderSide, right: borderSide);
+    } else if (alignment == Alignment.bottomLeft) {
+      border = Border(bottom: borderSide, left: borderSide);
+    } else {
+      border = Border(bottom: borderSide, right: borderSide);
+    }
+
+    return Container(width: size, height: size, decoration: BoxDecoration(border: border));
   }
 }

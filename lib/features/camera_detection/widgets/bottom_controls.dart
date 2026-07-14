@@ -41,9 +41,9 @@ class _BottomControlsState extends State<BottomControls> {
           /// =========================
           CameraTutorial.tutorial(
             key: widget.galleryKey,
-            title: "Gallery",
+            title: "Pilih Gambar",
             description:
-                "Select an image from your gallery to detect weeds from an existing photo.",
+                "Gunakan tombol ini untuk memilih gambar dari galeri perangkat Anda. WeedCheck akan menganalisis gambar yang dipilih.",
             child: IconButton(
               icon: Icon(Icons.image, color: Colors.white, size: 30),
               onPressed: () async {
@@ -79,9 +79,9 @@ class _BottomControlsState extends State<BottomControls> {
           /// =========================
           CameraTutorial.tutorial(
             key: widget.captureKey,
-            title: "Capture",
+            title: "Ambil Foto",
             description:
-                "Tap this button to capture an image. WeedCheck will automatically analyze the captured photo.",
+                "Tap tombol ini untuk mengambil foto. WeedCheck akan secara otomatis menganalisis foto yang diambil.",
             child: InkWell(
               borderRadius: BorderRadius.circular(100),
               onTap: () async {
@@ -157,9 +157,9 @@ class _BottomControlsState extends State<BottomControls> {
           /// =========================
           CameraTutorial.tutorial(
             key: widget.flipKey,
-            title: "Switch Camera",
+            title: "Flip Kamera",
             description:
-                "Tap this button to switch between the front and rear cameras.",
+                "Tap tombol ini untuk beralih antara kamera depan dan belakang.",
             child: InkWell(
               borderRadius: BorderRadius.circular(30),
               onTap: widget.onFlip,

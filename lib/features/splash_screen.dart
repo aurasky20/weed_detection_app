@@ -31,28 +31,37 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        // Menggunakan gradien hijau khas WeedCheck
+        // Gradien gelap agar logo (hijau terang + kuning) lebih menonjol
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF41B06E), Color(0xFF2D7A4D)],
+            colors: [Color(0xFF57BA69), Color(0xFF246A40)],
           ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Icon Eco Rounded sesuai permintaan Anda
             Container(
-              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                shape: BoxShape.circle,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color.fromARGB(255, 253, 255, 186), width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 251, 255, 0).withOpacity(0.25), // warna bayangan
+                    blurRadius: 10, // tingkat blur
+                    spreadRadius: 2, // ukuran bayangan
+                    offset: const Offset(0, 4), // posisi (x, y)
+                  ),
+                ],
               ),
-              child: const Icon(
-                Icons.eco_rounded,
-                color: Color(0xFFFFDD34), // Kuning cerah
-                size: 80, // Ukuran diperbesar untuk Splash
+              // padding: const EdgeInsets.all(20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image(
+                  image: const AssetImage('assets/icon/logo.png'),
+                  height: 100,
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -67,7 +76,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 8),
-            // Tagline sederhana
             Text(
               "Smart Farming, Better Result",
               style: GoogleFonts.poppins(
@@ -78,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen>
             const SizedBox(height: 50),
             // Loading indicator kecil di bawah
             const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFFDD34)),
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFEDC00)),
               strokeWidth: 3,
             ),
           ],

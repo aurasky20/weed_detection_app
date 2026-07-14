@@ -33,7 +33,7 @@ class TopBar extends StatelessWidget {
                 key: infoKey,
                 title: "Tutorial",
                 description:
-                    "Tap this button whenever you need to view the camera tutorial again.",
+                    "Tap tombol ini kapan pun Anda ingin melihat tutorial kamera lagi.",
                 child: IconButton(
                   onPressed: onShowTutorial,
                   icon: const Icon(Icons.info_outline, color: Colors.white),
@@ -43,7 +43,7 @@ class TopBar extends StatelessWidget {
               const Spacer(),
 
               const Text(
-                "Camera",
+                "Kamera",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 21,
@@ -56,9 +56,9 @@ class TopBar extends StatelessWidget {
               /// FLASH
               CameraTutorial.tutorial(
                 key: flashKey,
-                title: "Flash",
+                title: "Senter",
                 description:
-                    "Turn on the flashlight when the environment is dark to help capture clearer images.",
+                    "Nyalakan atau matikan senter untuk membantu pencahayaan saat mendeteksi gulma.",
                 child: IconButton(
                   onPressed: onFlashToggle,
                   icon: Icon(

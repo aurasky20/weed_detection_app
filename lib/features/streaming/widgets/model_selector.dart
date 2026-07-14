@@ -24,11 +24,11 @@ class ModelSelector extends StatelessWidget {
   final GlobalKey modelKey;
   String _formatModelName(String path) {
     if (path.contains('n_train6')) {
-      return 'Fast Detection (YOLOv8n)';
+      return 'Deteksi Cepat (YOLOv8n)';
     }
 
     if (path.contains('s_train6')) {
-      return 'Accurate Detection (YOLOv8s)';
+      return 'Deteksi Akurat (YOLOv8s)';
     }
 
     return path;
@@ -78,9 +78,9 @@ class ModelSelector extends StatelessWidget {
       ],
       child: StreamingTutorial.tutorial(
         key: modelKey,
-        title: "Model Selector",
+        title: "Pilih Model Deteksi",
         description:
-            "Choose the detection mode based on your needs. Use YOLOv8n for faster processing with slightly lower accuracy, or YOLOv8s for higher accuracy with slightly slower processing.",
+            "Pilih mode deteksi berdasarkan kebutuhan Anda. Gunakan YOLOv8n untuk pemrosesan yang lebih cepat dengan akurasi sedikit lebih rendah, atau YOLOv8s untuk akurasi yang lebih tinggi dengan pemrosesan sedikit lebih lambat.",
         child: Container(
           width: 280,
           height: 40,

@@ -44,7 +44,7 @@ class CameraInferenceContent extends StatelessWidget {
       );
     } else {
       return const Center(
-        child: Text('No model loaded', style: TextStyle(color: Colors.white)),
+        child: Text('Tidak ada model yang dimuat', style: TextStyle(color: Colors.white)),
       );
     }
   }
